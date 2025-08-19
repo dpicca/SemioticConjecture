@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="API docs compiled from docstrings using mkdocstrings" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Semiotic Conjecture</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Semiotic Conjecture";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Semiotic Conjecture
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Semiotic Conjecture</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notes-on-dependencies">Notes on Dependencies</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#input-and-output-example">Input and output example</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#operationalization">Operationalization</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-cli-entry-and-configuration">1. CLI entry and configuration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-corpus-loading-and-cleaning">2. Corpus loading and cleaning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-compute-sm-per-text-semiotic-amplitude">3. Compute S(M) per text (semiotic amplitude)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-compute-d_intrm-per-text-intrinsic-decodability">4. Compute D_intr(M) per text (intrinsic decodability)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-estimate-h-and-c-via-surrogate-communities">5. Estimate Ω(H) and ρ(C) via surrogate communities</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-compute-effective-decodability-dmhc">6. Compute effective decodability D(M;H,C)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#7-estimate-empirical-frontier-khc">7. Estimate empirical frontier k(H,C)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#8-ancillary-analyses">8. Ancillary analyses</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="output_schema/">Output schema</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="api/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/cli/">CLI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/config/">Config</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/corpus/">Corpus</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/analysis/">Analysis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/decodability/">Decodability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/frontier/">Frontier</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/reporting/">Reporting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/metrics/">Metrics (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/surrogates/">Surrogates (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/semiotic/">Semiotic (pkg)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Semiotic Conjecture</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Semiotic Conjecture</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="semiotic-conjecture">Semiotic Conjecture<a class="headerlink" href="#semiotic-conjecture" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>A lightweight, reproducible pipeline to measure semiotic amplitude and decodability of model outputs, and to estimate an empirical frontier in the ecosystem. We adopt a Peircean view of signs: each model output M is analyzed into a triad of sign, object, and interpretant. Decodability depends on how consistently a community H of interpreters converges on compatible interpretants under a context C that constrains meaning. As semiotic amplitude S(M) (variety of codes, strata, intertextuality) grows, effective decodability D(M;H,C) tends to shrink, producing an empirical frontier k(H,C) in the S–D plane.</p>
+<p>Mathematical formulation:
+$$
+X(M;H,C) \,=\, S(M)\, D(M;H,C)
+$$
+$$
+D(M;H,C) \,=\, \Omega(H)\, \rho(C)\, D_{\text{intr}}(M)
+$$
+$$
+S(M)\, D(M;H,C) \,\le\, k(H,C)
+$$
+with S, D_intr, Ω, ρ ∈ [0,1] and k(H,C) estimated non‑parametrically.</p>
+<h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Prepare a corpus at <code>data/corpus.csv</code> or use <code>data/sample_corpus.csv</code>.</li>
+<li>Ensure Ollama is running locally (default <code>http://localhost:11434</code>) and pull a few model families (e.g., llama3, mistral, qwen, phi3).</li>
+<li>Run the pipeline (Ollama surrogates):</li>
+</ol>
+<pre><code class="language-bash">python -m semiconj.cli run \
+  --input data/sample_corpus.csv \
+  --out out \
+  --ollama-models &quot;llama3,mistral,qwen&quot; \
+  --K 12
+</code></pre>
+<p>Offline dry run (heuristic surrogates):</p>
+<pre><code class="language-bash">python -m semiconj.cli run --input data/sample_corpus.csv --out out --surrogates heuristic
+</code></pre>
+<h2 id="notes-on-dependencies">Notes on Dependencies<a class="headerlink" href="#notes-on-dependencies" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Core: <code>pip install -r requirements.txt</code></li>
+<li>Sci extras: <code>pip install -r requirements-sci.txt</code></li>
+<li>Plot extras: <code>pip install -r requirements-plot.txt</code></li>
+<li>NLP extras: <code>pip install -r requirements-nlp.txt</code></li>
+<li>Dev tools: <code>pip install -r requirements-dev.txt</code></li>
+<li>Conda (optional): <code>conda env create -f environment.yml &amp;&amp; conda activate semiconj</code></li>
+<li>Surrogates: Ollama mode requires a local Ollama server and pulled models (HTTP API; falls back to <code>ollama run</code> CLI). Heuristic mode works fully offline for dry runs.</li>
+</ul>
+<h2 id="input-and-output-example">Input and output example<a class="headerlink" href="#input-and-output-example" title="Permanent link">&para;</a></h2>
+<p>Input CSV must include at least these columns:
+- id: unique identifier
+- text: raw text excerpt (150–300 words recommended)
+- Optional metadata columns prefixed with <code>meta_</code> (e.g., <code>meta_domain</code>, <code>meta_register</code>)</p>
+<p>Example input (data/sample_corpus.csv):</p>
+<pre><code class="language-csv">id,text,meta_domain
+ex1,&quot;The algorithm optimizes network flows. It is used in large software systems and represents a core model for routing.&quot;,technology
+ex2,&quot;Cells divide and proteins fold. Biology often explores how an organism adapts to an environment. Evolution is a process.&quot;,biology
+ex3,&quot;The canvas is a metaphor for memory. A painting captures what the novel cannot, or so the curator claims.&quot;,art
+</code></pre>
+<p>Example outputs (written to out/):</p>
+<p>S_metrics.csv</p>
+<pre><code class="language-csv">id,semantics,intertextuality,figures,lexicon,pos,codeswitch,S
+ex1,0.586813,0.135965,0.000000,0.800000,0.332854,0.105263,0.368584
+ex2,0.598695,0.162281,0.000000,0.554432,0.291685,0.052632,0.335144
+</code></pre>
+<p>D_effective.csv</p>
+<pre><code class="language-csv">id,context,D
+ex1,C_open,0.000000
+ex2,C_open,0.000000
+ex1,C_medium,0.166667
+ex2,C_medium,0.166667
+</code></pre>
+<p>Other files may include: cleaned_input.csv, D_intr.csv, Omega.csv, Rho.csv, Frontier.csv, Analyses.csv (see <a href="output_schema/">Output schema</a> for details).</p>
+<h2 id="operationalization">Operationalization<a class="headerlink" href="#operationalization" title="Permanent link">&para;</a></h2>
+<p>What is computed and where:
+- S(M) (semiotic amplitude) — computed per text by <code>semiconj.cli.compute_S_components</code> and aggregated with <code>semiconj.decodability.aggregate_S</code>.
+- D_intr(M) (intrinsic decodability) — <code>semiconj.semiotic.parser.compute_d_intr</code> extracts triads and coherence components.
+- Ω(H), ρ(C) — <code>semiconj.surrogates.community.omega_and_rho</code>; classes <code>Interpreter</code> and <code>OllamaInterpreter</code> generate labels/summaries.
+- D(M;H,C) — <code>semiconj.decodability.effective_decodability</code> combines D_intr with Ω and ρ.
+- Frontier k(H,C) — <code>semiconj.frontier.estimate_frontier</code> (95th‑percentile curve over S bins).
+- Corpus I/O — <code>semiconj.corpus.read_corpus</code>, <code>validate_corpus</code>, <code>excerpts_to_rows</code>, <code>write_csv</code>.
+- CLI orchestration — <code>semiconj.cli.run_pipeline</code> runs the full pipeline and saves outputs.
+- Reporting/plots — <code>semiconj.reporting.save_metrics</code>, <code>maybe_plot_frontier</code>.
+- Metrics building blocks — <code>semiconj.metrics.*</code> (complexity, entropy, embeddings, intertextuality, figures, codeswitch).</p>
+<h2 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h2>
+<p>This section describes the full pipeline, from CLI invocation to outputs, including which functions/classes call which others.</p>
+<p>At a glance:
+- 1. CLI entry and configuration
+- 2. Corpus loading and cleaning
+- 3. Compute S(M) per text
+- 4. Compute D_intr(M) per text
+- 5. Estimate Ω(H) and ρ(C)
+- 6. Compute effective decodability D(M;H,C)
+- 7. Estimate empirical frontier k(H,C)
+- 8. Ancillary analyses</p>
+<h3 id="1-cli-entry-and-configuration">1. CLI entry and configuration<a class="headerlink" href="#1-cli-entry-and-configuration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Entry point: <code>semiconj.cli.main</code> parses arguments (argparse) and sets logging.</li>
+<li>Configuration: <code>semiconj.config.validate_config(DEFAULT_WEIGHTS, CONTEXTS)</code> ensures weights sum to 1 and contexts are valid; then <code>semiconj.config.set_runtime_config(...)</code> applies runtime options (seed, embedding_dim, figures multiplier, pos_tagger).</li>
+<li>Orchestration: <code>semiconj.cli.main</code> calls <code>semiconj.cli.run_pipeline(input_csv, out_dir, k=K, surrogates=..., ollama_models=..., ollama_host=...)</code>.</li>
+<li>See also: <a href="api/cli/">CLI</a>, <a href="api/config/">Config</a>.</li>
+</ul>
+<h3 id="2-corpus-loading-and-cleaning">2. Corpus loading and cleaning<a class="headerlink" href="#2-corpus-loading-and-cleaning" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Read: <code>semiconj.corpus.read_corpus(input_csv)</code> -&gt; <code>List[Excerpt]</code>.</li>
+<li>Validate: <code>semiconj.corpus.validate_corpus(excerpts, min_words=10)</code> drops missing/dupe/short items.</li>
+<li>Persist cleaned copy: <code>semiconj.corpus.excerpts_to_rows</code> → <code>semiconj.corpus.write_csv</code> (<code>out/cleaned_input.csv</code>).</li>
+<li>See also: <a href="api/corpus/">Corpus</a>.</li>
+</ul>
+<h3 id="3-compute-sm-per-text-semiotic-amplitude">3. Compute S(M) per text (semiotic amplitude)<a class="headerlink" href="#3-compute-sm-per-text-semiotic-amplitude" title="Permanent link">&para;</a></h3>
+<ul>
+<li>In <code>run_pipeline</code>, loop over validated excerpts.</li>
+<li>For each text: <code>semiconj.cli.compute_S_components(text)</code> computes component scores.</li>
+<li>Components called:</li>
+<li><code>semiconj.metrics.embeddings.sentence_embedding_dispersion</code></li>
+<li><code>semiconj.metrics.intertextuality.domain_coverage_score</code></li>
+<li><code>semiconj.metrics.intertextuality.ner_coverage</code></li>
+<li><code>semiconj.metrics.figures.figures_score</code></li>
+<li><code>semiconj.metrics.complexity.mtld</code>, <code>yules_k</code>, <code>senses_per_lemma</code></li>
+<li><code>semiconj.metrics.entropy.ngram_entropy</code> (bigrams)</li>
+<li><code>semiconj.metrics.complexity.pos_entropy</code></li>
+<li><code>semiconj.metrics.codeswitch.codeswitch_index</code></li>
+<li>Aggregate: <code>semiconj.decodability.aggregate_S(components, semiconj.config.DEFAULT_WEIGHTS)</code>.</li>
+<li>Save: <code>semiconj.reporting.save_metrics(out/S_metrics.csv, rows)</code>.</li>
+<li>See also: <a href="api/metrics/">Metrics</a>, <a href="api/decodability/">Decodability</a>, <a href="api/reporting/">Reporting</a>.</li>
+</ul>
+<h3 id="4-compute-d_intrm-per-text-intrinsic-decodability">4. Compute D_intr(M) per text (intrinsic decodability)<a class="headerlink" href="#4-compute-d_intrm-per-text-intrinsic-decodability" title="Permanent link">&para;</a></h3>
+<ul>
+<li>For each text: <code>semiconj.semiotic.parser.compute_d_intr(text)</code>, which internally uses:</li>
+<li><code>semiconj.semiotic.parser.extract_triads</code> (rule-based triads: sign, object, interpretant)</li>
+<li><code>semiconj.semiotic.parser.global_coherence</code> (1 − dispersion from sentence embeddings)</li>
+<li><code>semiconj.semiotic.parser.interpretive_entropy</code> (1 − mean similarity among interpretants)</li>
+<li><code>semiconj.semiotic.parser.interpretant_vectors</code> (uses <code>metrics.embeddings._avg_vec</code>)</li>
+<li>Save components and <code>D_intr</code>: <code>semiconj.reporting.save_metrics(out/D_intr.csv, rows)</code>.</li>
+<li>See also: <a href="api/semiotic/">Semiotic (pkg)</a>.</li>
+</ul>
+<h3 id="5-estimate-h-and-c-via-surrogate-communities">5. Estimate Ω(H) and ρ(C) via surrogate communities<a class="headerlink" href="#5-estimate-h-and-c-via-surrogate-communities" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Contexts: names come from <code>semiconj.config.CONTEXTS</code> (e.g., <code>C_open</code>, <code>C_medium</code>, <code>C_rigid</code>).</li>
+<li>Strategy selection in <code>run_pipeline</code>:</li>
+<li>Heuristic: <code>omega_and_rho(texts, contexts, k=K, strategy="heuristic")</code><ul>
+<li>Community: <code>semiconj.surrogates.community.build_community</code> -&gt; <code>List[Interpreter]</code></li>
+<li>Per (text, context): <code>Interpreter.produce</code> returns <code>(label, summary)</code></li>
+<li>Agreement: <code>fleiss_kappa</code> over label assignments; semantic convergence via <code>cosine</code> on summaries</li>
+<li>Context rigidity <code>ρ</code>: computed from variance reduction of summary vectors across contexts (<code>variance_of_vectors</code>)</li>
+</ul>
+</li>
+<li>Ollama: <code>omega_and_rho(..., strategy="ollama", models=[...], ollama_host=...)</code><ul>
+<li>Community: <code>semiconj.surrogates.community.build_ollama_community</code> -&gt; <code>List[OllamaInterpreter]</code></li>
+<li>Otherwise identical aggregation to compute <code>Ω</code> and <code>ρ</code></li>
+</ul>
+</li>
+<li>Persist: <code>save_metrics(out/Omega.csv)</code>, <code>save_metrics(out/Rho.csv)</code>.</li>
+<li>See also: <a href="api/surrogates/">Surrogates (pkg)</a>.</li>
+</ul>
+<h3 id="6-compute-effective-decodability-dmhc">6. Compute effective decodability D(M;H,C)<a class="headerlink" href="#6-compute-effective-decodability-dmhc" title="Permanent link">&para;</a></h3>
+<ul>
+<li>For each context and id: <code>semiconj.decodability.effective_decodability(D_intr[i], omega_by_ctx[c], rho_by_ctx[c])</code>.</li>
+<li>Save: <code>semiconj.reporting.save_metrics(out/D_effective.csv, rows)</code>.</li>
+<li>See also: <a href="api/decodability/">Decodability</a>, <a href="api/reporting/">Reporting</a>.</li>
+</ul>
+<h3 id="7-estimate-empirical-frontier-khc">7. Estimate empirical frontier k(H,C)<a class="headerlink" href="#7-estimate-empirical-frontier-khc" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Aggregate D by id (mean across contexts) → <code>D_mean</code>.</li>
+<li>Frontier: <code>semiconj.frontier.estimate_frontier(S_values, D_mean)</code> returns <code>(S_bin, k95)</code> pairs.</li>
+<li>Save CSV: <code>semiconj.reporting.save_metrics(out/Frontier.csv, points)</code>.</li>
+<li>Optional plot: <code>semiconj.reporting.maybe_plot_frontier(out/frontier.png, points)</code> if matplotlib present.</li>
+<li>See also: <a href="api/frontier/">Frontier</a>, <a href="api/reporting/">Reporting</a>.</li>
+</ul>
+<h3 id="8-ancillary-analyses">8. Ancillary analyses<a class="headerlink" href="#8-ancillary-analyses" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Example: <code>semiconj.analysis.kendall_tau(S_values, D_intr_values)</code> → correlation summary.</li>
+<li>Save: <code>semiconj.reporting.save_metrics(out/Analyses.csv, rows)</code>.</li>
+<li>See also: <a href="api/analysis/">Analysis</a>.</li>
+</ul>
+<p>Data flow summary</p>
+<pre><code class="language-text">Inputs: data/corpus.csv
+  -&gt; read_corpus -&gt; validate_corpus -&gt; out/cleaned_input.csv
+  -&gt; compute_S_components -&gt; aggregate_S -&gt; out/S_metrics.csv
+  -&gt; compute_d_intr -&gt; out/D_intr.csv
+  -&gt; omega_and_rho -&gt; out/Omega.csv, out/Rho.csv
+  -&gt; effective_decodability -&gt; out/D_effective.csv
+  -&gt; estimate_frontier (+ maybe_plot_frontier) -&gt; out/Frontier.csv (+ frontier.png)
+  -&gt; kendall_tau -&gt; out/Analyses.csv
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="output_schema/" class="btn btn-neutral float-right" title="Output schema">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="output_schema/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-08-19 12:45:02.943433+00:00
+-->

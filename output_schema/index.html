@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Output schema - Semiotic Conjecture</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Output schema";
+        var mkdocs_page_input_path = "output_schema.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Semiotic Conjecture
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Semiotic Conjecture</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Output schema</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cleaned_inputcsv">cleaned_input.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#s_metricscsv">S_metrics.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#d_intrcsv">D_intr.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#omegacsv">Omega.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rhocsv">Rho.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#d_effectivecsv">D_effective.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#frontiercsv">Frontier.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#analysescsv">Analyses.csv</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/cli/">CLI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/config/">Config</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/corpus/">Corpus</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/analysis/">Analysis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/decodability/">Decodability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/frontier/">Frontier</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/reporting/">Reporting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/metrics/">Metrics (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/surrogates/">Surrogates (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/semiotic/">Semiotic (pkg)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Semiotic Conjecture</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Output schema</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="output-schema">Output schema<a class="headerlink" href="#output-schema" title="Permanent link">&para;</a></h1>
+<p>This page documents the CSV files written by the CLI pipeline. It focuses on what each file contains, how it is produced, and the exact column schemas.</p>
+<p>Note
+: General CSV conventions used across all outputs
+  - Encoding: UTF-8, newline terminator \n
+  - Floats: formatted to 6 decimals
+  - Column order: first-seen order is preserved by the writer</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Emitted by</th>
+<th>Key columns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#cleaned_inputcsv">cleaned_input.csv</a></td>
+<td>Validated copy of the input corpus</td>
+<td><code>semiconj.corpus.excerpts_to_rows</code> → <code>write_csv</code></td>
+<td>id, text, meta_*</td>
+</tr>
+<tr>
+<td><a href="#s_metricscsv">S_metrics.csv</a></td>
+<td>Semiotic amplitude components per text and aggregate S</td>
+<td><code>semiconj.cli.compute_S_components</code>, <code>semiconj.decodability.aggregate_S</code></td>
+<td>semantics, intertextuality, figures, lexicon, pos, codeswitch, S</td>
+</tr>
+<tr>
+<td><a href="#d_intrcsv">D_intr.csv</a></td>
+<td>Intrinsic decodability components and aggregate</td>
+<td><code>semiconj.semiotic.parser.compute_d_intr</code></td>
+<td>structural_precision, convergence, coherence, entropy, D_intr</td>
+</tr>
+<tr>
+<td><a href="#omegacsv">Omega.csv</a></td>
+<td>Corpus-level interpretive homogeneity per context</td>
+<td><code>semiconj.surrogates.community.omega_and_rho</code></td>
+<td>context, Omega</td>
+</tr>
+<tr>
+<td><a href="#rhocsv">Rho.csv</a></td>
+<td>Corpus-level contextual rigidity/constraint per context</td>
+<td><code>semiconj.surrogates.community.omega_and_rho</code></td>
+<td>context, Rho</td>
+</tr>
+<tr>
+<td><a href="#d_effectivecsv">D_effective.csv</a></td>
+<td>Effective decodability per text and context</td>
+<td><code>semiconj.decodability.effective_decodability</code></td>
+<td>id, context, D</td>
+</tr>
+<tr>
+<td><a href="#frontiercsv">Frontier.csv</a></td>
+<td>Non‑parametric frontier points (95th percentile of X=S·D per S bin)</td>
+<td><code>semiconj.frontier.estimate_frontier</code></td>
+<td>S_bin, k95</td>
+</tr>
+<tr>
+<td><a href="#analysescsv">Analyses.csv</a></td>
+<td>Extra analytical summaries</td>
+<td><code>semiconj.analysis.*</code></td>
+<td>metric, value</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cleaned_inputcsv">cleaned_input.csv<a class="headerlink" href="#cleaned_inputcsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: cleaned copy of the input corpus after validation</li>
+<li>Emitted by: <code>semiconj.corpus.excerpts_to_rows</code> and <code>semiconj.corpus.write_csv</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>—</td>
+<td>Unique identifier, first occurrence kept on duplicates</td>
+</tr>
+<tr>
+<td>text</td>
+<td>string</td>
+<td>—</td>
+<td>Raw text excerpt</td>
+</tr>
+<tr>
+<td>meta_*</td>
+<td>string</td>
+<td>optional</td>
+<td>Any additional input columns are kept; non <code>meta_</code> names are prefixed</td>
+</tr>
+</tbody>
+</table>
+<p>Notes
+- Rows failing validation (missing id/text, duplicate id, too short) are removed prior to writing.</p>
+<hr />
+<h2 id="s_metricscsv">S_metrics.csv<a class="headerlink" href="#s_metricscsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: per‑text semiotic amplitude components and aggregate</li>
+<li>Emitted by: <code>semiconj.cli.compute_S_components</code> + <code>semiconj.decodability.aggregate_S</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>—</td>
+<td>Record identifier</td>
+</tr>
+<tr>
+<td>semantics</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Avg of sentence embedding dispersion and domain coverage</td>
+</tr>
+<tr>
+<td>intertextuality</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Avg of NER-like coverage and domain coverage</td>
+</tr>
+<tr>
+<td>figures</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Metaphor/irony proxy score</td>
+</tr>
+<tr>
+<td>lexicon</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>MTLD (normalized), Yule’s K (mapped), senses/lemma (norm), bigram entropy (avg)</td>
+</tr>
+<tr>
+<td>pos</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>POS-tag distribution entropy (UPOS-normalized)</td>
+</tr>
+<tr>
+<td>codeswitch</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Code‑switching index</td>
+</tr>
+<tr>
+<td>S</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Weighted aggregate using <code>semiconj.config.DEFAULT_WEIGHTS</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="d_intrcsv">D_intr.csv<a class="headerlink" href="#d_intrcsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: intrinsic decodability components and aggregate per text</li>
+<li>Emitted by: <code>semiconj.semiotic.parser.compute_d_intr</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>—</td>
+<td>Record identifier</td>
+</tr>
+<tr>
+<td>structural_precision</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Triads per sentence (clipped)</td>
+</tr>
+<tr>
+<td>convergence</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Mean pairwise cosine among interpretants</td>
+</tr>
+<tr>
+<td>coherence</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>1 − dispersion across sentences</td>
+</tr>
+<tr>
+<td>entropy</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>1 − mean similarity among interpretants (penalty)</td>
+</tr>
+<tr>
+<td>D_intr</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Aggregated intrinsic decodability</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="omegacsv">Omega.csv<a class="headerlink" href="#omegacsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: corpus-level interpretive homogeneity per context</li>
+<li>Emitted by: <code>semiconj.surrogates.community.omega_and_rho</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>context</td>
+<td>string</td>
+<td>typically {C_open, C_medium, C_rigid}</td>
+<td>Context identifier (configurable)</td>
+</tr>
+<tr>
+<td>Omega</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Interpretive homogeneity of the community</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="rhocsv">Rho.csv<a class="headerlink" href="#rhocsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: corpus-level contextual rigidity/constraint per context</li>
+<li>Emitted by: <code>semiconj.surrogates.community.omega_and_rho</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>context</td>
+<td>string</td>
+<td>typically {C_open, C_medium, C_rigid}</td>
+<td>Context identifier (configurable)</td>
+</tr>
+<tr>
+<td>Rho</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Rigidity/constraint of the context</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="d_effectivecsv">D_effective.csv<a class="headerlink" href="#d_effectivecsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: effective decodability per text and context</li>
+<li>Emitted by: <code>semiconj.decodability.effective_decodability</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>—</td>
+<td>Record identifier</td>
+</tr>
+<tr>
+<td>context</td>
+<td>string</td>
+<td>—</td>
+<td>Context name used to compute D</td>
+</tr>
+<tr>
+<td>D</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Effective decodability = Ω · ρ · D_intr</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="frontiercsv">Frontier.csv<a class="headerlink" href="#frontiercsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: non‑parametric frontier k(H,C) estimated as the 95th percentile of X = S·D within S bins</li>
+<li>Emitted by: <code>semiconj.frontier.estimate_frontier</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S_bin</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>Representative S value (bin center)</td>
+</tr>
+<tr>
+<td>k95</td>
+<td>float</td>
+<td>[0,1]</td>
+<td>95th percentile of X = S·D in that bin</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="analysescsv">Analyses.csv<a class="headerlink" href="#analysescsv" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Purpose: extra analytical summaries (may grow over time)</li>
+<li>Emitted by: <code>semiconj.analysis.*</code> via <code>semiconj.reporting.save_metrics</code></li>
+</ul>
+<p>Columns</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Range/Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metric</td>
+<td>string</td>
+<td>—</td>
+<td>Metric name (e.g., <code>Kendall_tau_S_vs_Dintr</code>)</td>
+</tr>
+<tr>
+<td>value</td>
+<td>float</td>
+<td>—</td>
+<td>Metric value</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>S_metrics.csv (excerpt)</p>
+<pre><code class="language-csv">id,semantics,intertextuality,figures,lexicon,pos,codeswitch,S
+ex1,0.586813,0.135965,0.000000,0.800000,0.332854,0.105263,0.368584
+ex2,0.598695,0.162281,0.000000,0.554432,0.291685,0.052632,0.335144
+</code></pre>
+<p>D_effective.csv (excerpt)</p>
+<pre><code class="language-csv">id,context,D
+ex1,C_open,0.000000
+ex2,C_open,0.000000
+ex1,C_medium,0.166667
+ex2,C_medium,0.166667
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Semiotic Conjecture"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../api/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

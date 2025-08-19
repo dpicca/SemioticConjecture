@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Config - Semiotic Conjecture</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Config";
+        var mkdocs_page_input_path = "api/config.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Semiotic Conjecture
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Semiotic Conjecture</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../output_schema/">Output schema</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Config</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.config">config</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.config.Context">Context</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.config.RuntimeConfig">RuntimeConfig</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.config.get_runtime_config">get_runtime_config</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.config.set_runtime_config">set_runtime_config</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.config.validate_config">validate_config</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reporting/">Reporting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../surrogates/">Surrogates (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../semiotic/">Semiotic (pkg)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Semiotic Conjecture</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">Config</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="config">Config<a class="headerlink" href="#config" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="semiconj.config"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="semiconj.config.Context" class="doc doc-heading">
+            <code>Context</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#semiconj.config.Context" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Context configuration describing interpretive rigidity.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>name</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Context identifier (e.g., 'C_open', 'C_medium', 'C_rigid').</p>
+              </div>
+            </li>
+            <li>
+              <b><code>description</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Human-readable description of the context constraints.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; Context('C_open', 'No instructions.')
+Context(name='C_open', description='No instructions.')</code></pre>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>semiconj/config.py</code></summary>
+                <pre class="highlight"><code class="language-python">@dataclass(frozen=True)
+class Context:
+    """Context configuration describing interpretive rigidity.
+
+    Attributes:
+        name: Context identifier (e.g., 'C_open', 'C_medium', 'C_rigid').
+        description: Human-readable description of the context constraints.
+
+    Examples:
+        &gt;&gt;&gt; Context('C_open', 'No instructions.')
+        Context(name='C_open', description='No instructions.')
+    """
+    name: str
+    description: str</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="semiconj.config.RuntimeConfig" class="doc doc-heading">
+            <code>RuntimeConfig</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#semiconj.config.RuntimeConfig" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Centralized runtime configuration.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>seed</code></b>
+                  (<code><span title="int">int</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Global random seed for reproducibility.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding_dim</code></b>
+                  (<code><span title="int">int</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Default embedding dimension for hashing/averaging embeddings.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>figures_multiplier</code></b>
+                  (<code><span title="float">float</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Multiplier applied to figures_score to tune its contribution.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>pos_tagger</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Which POS tagger to use ("naive" or "spacy").</p>
+              </div>
+            </li>
+            <li>
+              <b><code>figures_ollama_model</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>If non-empty, use this Ollama model to compute figures_score.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>figures_ollama_host</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Ollama server host URL for figures scoring.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embeddings_ollama_model</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>If non-empty, use this Ollama embedding model (e.g., 'nomic-embed-text') for sentence embeddings.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embeddings_ollama_host</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Ollama server host URL for embeddings (defaults to localhost).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>nlp_ollama_model</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>If non-empty, use this Ollama model (e.g., 'gpt-oss') for tokenization, sentence splitting, and NER.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>nlp_ollama_host</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Ollama server host URL for NLP tasks (defaults to localhost).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; cfg = RuntimeConfig(seed=123, embedding_dim=64, figures_multiplier=1.5, pos_tagger='naive')
+&gt;&gt;&gt; cfg.seed, cfg.embedding_dim, cfg.pos_tagger
+(123, 64, 'naive')</code></pre>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>semiconj/config.py</code></summary>
+                <pre class="highlight"><code class="language-python">@dataclass
+class RuntimeConfig:
+    """Centralized runtime configuration.
+
+    Attributes:
+        seed: Global random seed for reproducibility.
+        embedding_dim: Default embedding dimension for hashing/averaging embeddings.
+        figures_multiplier: Multiplier applied to figures_score to tune its contribution.
+        pos_tagger: Which POS tagger to use ("naive" or "spacy").
+        figures_ollama_model: If non-empty, use this Ollama model to compute figures_score.
+        figures_ollama_host: Ollama server host URL for figures scoring.
+        embeddings_ollama_model: If non-empty, use this Ollama embedding model (e.g., 'nomic-embed-text') for sentence embeddings.
+        embeddings_ollama_host: Ollama server host URL for embeddings (defaults to localhost).
+        nlp_ollama_model: If non-empty, use this Ollama model (e.g., 'gpt-oss') for tokenization, sentence splitting, and NER.
+        nlp_ollama_host: Ollama server host URL for NLP tasks (defaults to localhost).
+
+    Examples:
+        &gt;&gt;&gt; cfg = RuntimeConfig(seed=123, embedding_dim=64, figures_multiplier=1.5, pos_tagger='naive')
+        &gt;&gt;&gt; cfg.seed, cfg.embedding_dim, cfg.pos_tagger
+        (123, 64, 'naive')
+    """
+    seed: int = 42
+    embedding_dim: int = 128
+    figures_multiplier: float = 1.0
+    pos_tagger: str = ""
+    figures_ollama_model: str = "gpt-oss:latest"
+    figures_ollama_host: str = "http://localhost:11434"
+    embeddings_ollama_model: str = "nomic-embed-text:v1.5"
+    embeddings_ollama_host: str = "http://localhost:11434"
+    nlp_ollama_model: str = "gpt-oss:latest"
+    nlp_ollama_host: str = "http://localhost:11434"</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.config.get_runtime_config" class="doc doc-heading">
+            <code class="highlight language-python">get_runtime_config()</code>
+
+<a href="#semiconj.config.get_runtime_config" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the current runtime configuration object.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="RuntimeConfig
+
+
+  
+      dataclass
+   (semiconj.config.RuntimeConfig)" href="#semiconj.config.RuntimeConfig">RuntimeConfig</a></code>
+              –
+              <div class="doc-md-description">
+                <p>The live RuntimeConfig instance used across the library.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; cfg = get_runtime_config()
+&gt;&gt;&gt; isinstance(cfg, RuntimeConfig)
+True</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/config.py</code></summary>
+              <pre class="highlight"><code class="language-python">def get_runtime_config() -&gt; RuntimeConfig:
+    """Return the current runtime configuration object.
+
+    Returns:
+        The live RuntimeConfig instance used across the library.
+
+    Examples:
+        &gt;&gt;&gt; cfg = get_runtime_config()
+        &gt;&gt;&gt; isinstance(cfg, RuntimeConfig)
+        True
+    """
+    return _runtime_config</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.config.set_runtime_config" class="doc doc-heading">
+            <code class="highlight language-python">set_runtime_config(seed=None, embedding_dim=None, figures_multiplier=None, pos_tagger=None, figures_ollama_model=None, figures_ollama_host=None, embeddings_ollama_model=None, embeddings_ollama_host=None, nlp_ollama_model=None, nlp_ollama_host=None)</code>
+
+<a href="#semiconj.config.set_runtime_config" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Update the global runtime configuration with provided values.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>seed</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="int">int</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Global random seed to set.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding_dim</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="int">int</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Default embedding dimension for hashing/averaging embeddings.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>figures_multiplier</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="float">float</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Multiplier applied to figures_score for tuning.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>pos_tagger</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Either "naive" or "spacy" (strictly validated).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>figures_ollama_model</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>If provided, enable Ollama-based figures scoring using this model name.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>figures_ollama_host</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Ollama HTTP host used for figures scoring (defaults to localhost).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embeddings_ollama_model</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>If provided, enable Ollama-based sentence embeddings using this model name.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embeddings_ollama_host</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Ollama HTTP host used for embeddings (defaults to localhost).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>nlp_ollama_model</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>If provided, enable Ollama-based NLP (tokenization, sentence splitting, NER) using this model name.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>nlp_ollama_host</code></b>
+                  (<code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Ollama HTTP host used for NLP tasks (defaults to localhost).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="ValueError">ValueError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>If <code>pos_tagger</code> is provided and not one of {"naive", "spacy"}.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; set_runtime_config(seed=123, embedding_dim=64, pos_tagger='naive')
+&gt;&gt;&gt; get_runtime_config().seed
+123</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/config.py</code></summary>
+              <pre class="highlight"><code class="language-python">def set_runtime_config(seed: Optional[int] = None, embedding_dim: Optional[int] = None, figures_multiplier: Optional[float] = None, pos_tagger: Optional[str] = None, figures_ollama_model: Optional[str] = None, figures_ollama_host: Optional[str] = None, embeddings_ollama_model: Optional[str] = None, embeddings_ollama_host: Optional[str] = None, nlp_ollama_model: Optional[str] = None, nlp_ollama_host: Optional[str] = None) -&gt; None:
+    """Update the global runtime configuration with provided values.
+
+    Args:
+        seed: Global random seed to set.
+        embedding_dim: Default embedding dimension for hashing/averaging embeddings.
+        figures_multiplier: Multiplier applied to figures_score for tuning.
+        pos_tagger: Either "naive" or "spacy" (strictly validated).
+        figures_ollama_model: If provided, enable Ollama-based figures scoring using this model name.
+        figures_ollama_host: Ollama HTTP host used for figures scoring (defaults to localhost).
+        embeddings_ollama_model: If provided, enable Ollama-based sentence embeddings using this model name.
+        embeddings_ollama_host: Ollama HTTP host used for embeddings (defaults to localhost).
+        nlp_ollama_model: If provided, enable Ollama-based NLP (tokenization, sentence splitting, NER) using this model name.
+        nlp_ollama_host: Ollama HTTP host used for NLP tasks (defaults to localhost).
+
+    Raises:
+        ValueError: If ``pos_tagger`` is provided and not one of {"naive", "spacy"}.
+
+    Examples:
+        &gt;&gt;&gt; set_runtime_config(seed=123, embedding_dim=64, pos_tagger='naive')  # doctest: +SKIP
+        &gt;&gt;&gt; get_runtime_config().seed  # doctest: +SKIP
+        123
+    """
+    if seed is not None:
+        _runtime_config.seed = int(seed)
+    if embedding_dim is not None:
+        _runtime_config.embedding_dim = int(embedding_dim)
+    if figures_multiplier is not None:
+        _runtime_config.figures_multiplier = float(figures_multiplier)
+    if pos_tagger is not None:
+        pt = str(pos_tagger).lower()
+        if pt not in {"naive", "spacy"}:
+            raise ValueError("pos_tagger must be 'naive' or 'spacy'")
+        _runtime_config.pos_tagger = pt
+    if figures_ollama_model is not None:
+        _runtime_config.figures_ollama_model = str(figures_ollama_model)
+    if figures_ollama_host is not None:
+        _runtime_config.figures_ollama_host = str(figures_ollama_host)
+    if embeddings_ollama_model is not None:
+        _runtime_config.embeddings_ollama_model = str(embeddings_ollama_model)
+    if embeddings_ollama_host is not None:
+        _runtime_config.embeddings_ollama_host = str(embeddings_ollama_host)
+    if nlp_ollama_model is not None:
+        _runtime_config.nlp_ollama_model = str(nlp_ollama_model)
+    if nlp_ollama_host is not None:
+        _runtime_config.nlp_ollama_host = str(nlp_ollama_host)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.config.validate_config" class="doc doc-heading">
+            <code class="highlight language-python">validate_config(weights, contexts)</code>
+
+<a href="#semiconj.config.validate_config" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate configuration consistency.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>weights</code></b>
+                  (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="float">float</span>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Mapping of S(M) component names to weights expected to sum to 1.0.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>contexts</code></b>
+                  (<code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="Context
+
+
+  
+      dataclass
+   (semiconj.config.Context)" href="#semiconj.config.Context">Context</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>List of Context objects describing available interpretive contexts.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="ValueError">ValueError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>If weights do not sum to 1.0 (±1e-6), if no contexts are provided,
+or if any context has an empty name.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="notes" open>
+  <summary>Notes</summary>
+  <p>This function enforces strict invariants used by the pipeline. Call it early
+to fail fast on misconfiguration.</p>
+</details>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; good_w = {'a': 0.5, 'b': 0.5}
+&gt;&gt;&gt; good_c = [Context('C_open', '...')]
+&gt;&gt;&gt; validate_config(good_w, good_c)
+&gt;&gt;&gt; bad_w = {'a': 0.7, 'b': 0.2}
+&gt;&gt;&gt; try:
+...     validate_config(bad_w, good_c)
+... except ValueError:
+...     print('bad weights')
+bad weights</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/config.py</code></summary>
+              <pre class="highlight"><code class="language-python">def validate_config(weights: Dict[str, float], contexts: List[Context]) -&gt; None:
+    """Validate configuration consistency.
+
+    Args:
+        weights: Mapping of S(M) component names to weights expected to sum to 1.0.
+        contexts: List of Context objects describing available interpretive contexts.
+
+    Raises:
+        ValueError: If weights do not sum to 1.0 (±1e-6), if no contexts are provided,
+            or if any context has an empty name.
+
+    Notes:
+        This function enforces strict invariants used by the pipeline. Call it early
+        to fail fast on misconfiguration.
+
+    Examples:
+        &gt;&gt;&gt; good_w = {'a': 0.5, 'b': 0.5}
+        &gt;&gt;&gt; good_c = [Context('C_open', '...')]
+        &gt;&gt;&gt; validate_config(good_w, good_c)
+        &gt;&gt;&gt; bad_w = {'a': 0.7, 'b': 0.2}
+        &gt;&gt;&gt; try:
+        ...     validate_config(bad_w, good_c)
+        ... except ValueError:
+        ...     print('bad weights')
+        bad weights
+    """
+    total = sum(weights.values())
+    if abs(total - 1.0) &gt; 1e-6:
+        raise ValueError(f"S component weights must sum to 1.0 (got {total:.6f}).")
+    if not contexts:
+        raise ValueError("At least one context must be defined.")
+    if any(not c.name for c in contexts):
+        raise ValueError("Each context must have a non-empty name.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../cli/" class="btn btn-neutral float-left" title="CLI"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../corpus/" class="btn btn-neutral float-right" title="Corpus">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../cli/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../corpus/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Corpus - Semiotic Conjecture</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Corpus";
+        var mkdocs_page_input_path = "api/corpus.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Semiotic Conjecture
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Semiotic Conjecture</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../output_schema/">Output schema</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Corpus</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.corpus">corpus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.corpus.Excerpt">Excerpt</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.corpus.excerpts_to_rows">excerpts_to_rows</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.corpus.read_corpus">read_corpus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.corpus.validate_corpus">validate_corpus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.corpus.write_csv">write_csv</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reporting/">Reporting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../surrogates/">Surrogates (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../semiotic/">Semiotic (pkg)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Semiotic Conjecture</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">Corpus</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="corpus">Corpus<a class="headerlink" href="#corpus" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="semiconj.corpus"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="semiconj.corpus.Excerpt" class="doc doc-heading">
+            <code>Excerpt</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#semiconj.corpus.Excerpt" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A single corpus record with text and metadata.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>id</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Unique identifier of the record (stringified).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>text</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The raw text excerpt.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>meta</code></b>
+                  (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="str">str</span>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Arbitrary metadata as a mapping from column name to value.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; Excerpt(id="001", text="Hello world.", meta={"meta_domain": "news"})
+Excerpt(id='001', text='Hello world.', meta={'meta_domain': 'news'})</code></pre>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>semiconj/corpus.py</code></summary>
+                <pre class="highlight"><code class="language-python">@dataclass
+class Excerpt:
+    """A single corpus record with text and metadata.
+
+    Attributes:
+        id: Unique identifier of the record (stringified).
+        text: The raw text excerpt.
+        meta: Arbitrary metadata as a mapping from column name to value.
+
+    Examples:
+        &gt;&gt;&gt; Excerpt(id="001", text="Hello world.", meta={"meta_domain": "news"})
+        Excerpt(id='001', text='Hello world.', meta={'meta_domain': 'news'})
+    """
+    id: str
+    text: str
+    meta: Dict[str, str]</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.corpus.excerpts_to_rows" class="doc doc-heading">
+            <code class="highlight language-python">excerpts_to_rows(excerpts)</code>
+
+<a href="#semiconj.corpus.excerpts_to_rows" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Convert excerpts into CSV-ready row dicts, preserving meta_* keys.</p>
+<p>For each Excerpt, this function emits a dict with at least <code>id</code> and <code>text</code>
+fields. Any metadata keys not starting with <code>meta_</code> are prefixed accordingly.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>excerpts</code></b>
+                  (<code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="Excerpt
+
+
+  
+      dataclass
+   (semiconj.corpus.Excerpt)" href="#semiconj.corpus.Excerpt">Excerpt</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>List of Excerpt objects.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="typing.List">List</span>[<span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="object">object</span>]]</code>
+              –
+              <div class="doc-md-description">
+                <p>A list of dictionaries suitable for CSV writing with <code>write_csv</code>.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; ex = [Excerpt('1', 'Hello', {'domain': 'news'})]
+&gt;&gt;&gt; rows = excerpts_to_rows(ex)
+&gt;&gt;&gt; rows[0]['id'], rows[0]['text'], rows[0]['meta_domain']
+('1', 'Hello', 'news')</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/corpus.py</code></summary>
+              <pre class="highlight"><code class="language-python">def excerpts_to_rows(excerpts: List[Excerpt]) -&gt; List[Dict[str, object]]:
+    """Convert excerpts into CSV-ready row dicts, preserving meta_* keys.
+
+    For each Excerpt, this function emits a dict with at least ``id`` and ``text``
+    fields. Any metadata keys not starting with ``meta_`` are prefixed accordingly.
+
+    Args:
+        excerpts: List of Excerpt objects.
+
+    Returns:
+        A list of dictionaries suitable for CSV writing with ``write_csv``.
+
+    Examples:
+        &gt;&gt;&gt; ex = [Excerpt('1', 'Hello', {'domain': 'news'})]
+        &gt;&gt;&gt; rows = excerpts_to_rows(ex)
+        &gt;&gt;&gt; rows[0]['id'], rows[0]['text'], rows[0]['meta_domain']
+        ('1', 'Hello', 'news')
+    """
+    rows: List[Dict[str, object]] = []
+    for ex in excerpts:
+        row: Dict[str, object] = {"id": ex.id, "text": ex.text}
+        for k, v in ex.meta.items():
+            col = k if k.startswith("meta_") else f"meta_{k}"
+            row[col] = v
+        rows.append(row)
+    return rows</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.corpus.read_corpus" class="doc doc-heading">
+            <code class="highlight language-python">read_corpus(csv_path)</code>
+
+<a href="#semiconj.corpus.read_corpus" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Read a CSV corpus into a list of Excerpt records.</p>
+<p>The CSV must contain at least the columns <code>id</code> and <code>text</code>. Any other
+columns are stored as metadata in the <code>meta</code> dict.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>csv_path</code></b>
+                  (<code><span title="pathlib.Path">Path</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Path to the input CSV file.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="Excerpt
+
+
+  
+      dataclass
+   (semiconj.corpus.Excerpt)" href="#semiconj.corpus.Excerpt">Excerpt</a>]</code>
+              –
+              <div class="doc-md-description">
+                <p>A list of Excerpt instances parsed from the CSV.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="ValueError">ValueError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>If required columns are missing.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from pathlib import Path
+&gt;&gt;&gt; rows = read_corpus(Path('data/sample_corpus.csv'))
+&gt;&gt;&gt; isinstance(rows, list)
+True</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/corpus.py</code></summary>
+              <pre class="highlight"><code class="language-python">def read_corpus(csv_path: Path) -&gt; List[Excerpt]:
+    """Read a CSV corpus into a list of Excerpt records.
+
+    The CSV must contain at least the columns ``id`` and ``text``. Any other
+    columns are stored as metadata in the ``meta`` dict.
+
+    Args:
+        csv_path: Path to the input CSV file.
+
+    Returns:
+        A list of Excerpt instances parsed from the CSV.
+
+    Raises:
+        ValueError: If required columns are missing.
+
+    Examples:
+        &gt;&gt;&gt; from pathlib import Path
+        &gt;&gt;&gt; rows = read_corpus(Path('data/sample_corpus.csv'))  # doctest: +SKIP
+        &gt;&gt;&gt; isinstance(rows, list)  # doctest: +SKIP
+        True
+    """
+    rows: List[Excerpt] = []
+    with open(csv_path, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        if not reader.fieldnames or 'id' not in reader.fieldnames or 'text' not in reader.fieldnames:
+            raise ValueError("CSV must contain 'id' and 'text' columns")
+        for r in reader:
+            meta = {k: (v if v is not None else '') for k, v in r.items() if k not in {"id", "text"}}
+            rows.append(Excerpt(id=str(r.get('id', '')).strip(), text=str(r.get('text', '') or '').strip(), meta=meta))
+    return rows</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.corpus.validate_corpus" class="doc doc-heading">
+            <code class="highlight language-python">validate_corpus(excerpts, min_words=10)</code>
+
+<a href="#semiconj.corpus.validate_corpus" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate a corpus and return cleaned excerpts plus a summary report.</p>
+<p>Rules applied in order:
+- Drop rows with missing/empty id or text.
+- Drop duplicate ids (keep the first occurrence).
+- Drop extremely short texts (fewer than <code>min_words</code> tokens).</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>excerpts</code></b>
+                  (<code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="Excerpt
+
+
+  
+      dataclass
+   (semiconj.corpus.Excerpt)" href="#semiconj.corpus.Excerpt">Excerpt</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>List of Excerpt instances to validate.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>min_words</code></b>
+                  (<code><span title="int">int</span></code>, default:
+                      <code>10</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Minimum whitespace-separated token count required to keep a text.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="Excerpt
+
+
+  
+      dataclass
+   (semiconj.corpus.Excerpt)" href="#semiconj.corpus.Excerpt">Excerpt</a>]</code>
+              –
+              <div class="doc-md-description">
+                <p>A pair <code>(cleaned, report)</code> where <code>cleaned</code> is the filtered list of excerpts</p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="int">int</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>and <code>report</code> is a dict with counts: <code>total</code>, <code>dropped_missing</code>, <code>dropped_dupe</code>,</p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="typing.Tuple">Tuple</span>[<span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="Excerpt
+
+
+  
+      dataclass
+   (semiconj.corpus.Excerpt)" href="#semiconj.corpus.Excerpt">Excerpt</a>], <span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="int">int</span>]]</code>
+              –
+              <div class="doc-md-description">
+                <p><code>dropped_short</code>, <code>kept</code>.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; ex = [
+...     Excerpt('1', 'too short', {}),
+...     Excerpt('1', 'duplicate id', {}),
+...     Excerpt('2', 'this is long enough text for validation', {}),
+... ]
+&gt;&gt;&gt; cleaned, report = validate_corpus(ex, min_words=3)
+&gt;&gt;&gt; [e.id for e in cleaned]
+['2']</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/corpus.py</code></summary>
+              <pre class="highlight"><code class="language-python">def validate_corpus(excerpts: List[Excerpt], min_words: int = 10) -&gt; Tuple[List[Excerpt], Dict[str, int]]:
+    """Validate a corpus and return cleaned excerpts plus a summary report.
+
+    Rules applied in order:
+    - Drop rows with missing/empty id or text.
+    - Drop duplicate ids (keep the first occurrence).
+    - Drop extremely short texts (fewer than ``min_words`` tokens).
+
+    Args:
+        excerpts: List of Excerpt instances to validate.
+        min_words: Minimum whitespace-separated token count required to keep a text.
+
+    Returns:
+        A pair ``(cleaned, report)`` where ``cleaned`` is the filtered list of excerpts
+        and ``report`` is a dict with counts: ``total``, ``dropped_missing``, ``dropped_dupe``,
+        ``dropped_short``, ``kept``.
+
+    Examples:
+        &gt;&gt;&gt; ex = [
+        ...     Excerpt('1', 'too short', {}),
+        ...     Excerpt('1', 'duplicate id', {}),
+        ...     Excerpt('2', 'this is long enough text for validation', {}),
+        ... ]
+        &gt;&gt;&gt; cleaned, report = validate_corpus(ex, min_words=3)
+        &gt;&gt;&gt; [e.id for e in cleaned]
+        ['2']
+    """
+    report = {"total": len(excerpts), "dropped_missing": 0, "dropped_dupe": 0, "dropped_short": 0, "kept": 0}
+    seen: Set[str] = set()
+    cleaned: List[Excerpt] = []
+    for ex in excerpts:
+        if not ex.id or not ex.text:
+            report["dropped_missing"] += 1
+            continue
+        if ex.id in seen:
+            report["dropped_dupe"] += 1
+            continue
+        if len(ex.text.split()) &lt; max(0, min_words):
+            report["dropped_short"] += 1
+            continue
+        seen.add(ex.id)
+        cleaned.append(ex)
+    report["kept"] = len(cleaned)
+    logger.info(
+        "Validated corpus: total=%d kept=%d dropped_missing=%d dropped_dupe=%d dropped_short=%d",
+        report["total"], report["kept"], report["dropped_missing"], report["dropped_dupe"], report["dropped_short"],
+    )
+    return cleaned, report</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.corpus.write_csv" class="doc doc-heading">
+            <code class="highlight language-python">write_csv(path, rows)</code>
+
+<a href="#semiconj.corpus.write_csv" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Write dictionaries to CSV, preserving all observed columns.</p>
+<p>This function computes the union of keys across all rows to avoid dropping
+sparse columns. Floats are formatted to 6 decimals to ensure consistency.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>path</code></b>
+                  (<code><span title="pathlib.Path">Path</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Destination CSV path.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>rows</code></b>
+                  (<code><span title="typing.Iterable">Iterable</span>[<span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="object">object</span>]]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Iterable of mapping objects to serialize.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; from pathlib import Path
+&gt;&gt;&gt; rows = [{'id': '1', 'S': 0.5}, {'id': '2', 'S': 0.75, 'extra': 'x'}]
+&gt;&gt;&gt; write_csv(Path('tmp.csv'), rows)
+# Creates tmp.csv with header: id,S,extra (order preserved by first occurrence)</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/corpus.py</code></summary>
+              <pre class="highlight"><code class="language-python">def write_csv(path: Path, rows: Iterable[Dict[str, object]]) -&gt; None:
+    """Write dictionaries to CSV, preserving all observed columns.
+
+    This function computes the union of keys across all rows to avoid dropping
+    sparse columns. Floats are formatted to 6 decimals to ensure consistency.
+
+    Args:
+        path: Destination CSV path.
+        rows: Iterable of mapping objects to serialize.
+
+    Examples:
+        &gt;&gt;&gt; from pathlib import Path
+        &gt;&gt;&gt; rows = [{'id': '1', 'S': 0.5}, {'id': '2', 'S': 0.75, 'extra': 'x'}]
+        &gt;&gt;&gt; write_csv(Path('tmp.csv'), rows)  # doctest: +SKIP
+        # Creates tmp.csv with header: id,S,extra (order preserved by first occurrence)
+    """
+    rows = list(rows)
+    if not rows:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # Determine union of fieldnames across rows to avoid dropping columns
+    fieldnames: List[str] = []
+    seen_fields: Set[str] = set()
+    for r in rows:
+        for k in r.keys():
+            if k not in seen_fields:
+                seen_fields.add(k)
+                fieldnames.append(k)
+    def _format(v: object) -&gt; object:
+        # Ensure numeric formatting consistency
+        if isinstance(v, float):
+            return f"{v:.6f}"
+        return v
+    with open(path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=fieldnames,
+            extrasaction='ignore',
+            restval='',
+            quoting=csv.QUOTE_MINIMAL,
+            lineterminator='\n',
+        )
+        writer.writeheader()
+        for r in rows:
+            writer.writerow({k: _format(r.get(k, '')) for k in fieldnames})</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../config/" class="btn btn-neutral float-left" title="Config"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../analysis/" class="btn btn-neutral float-right" title="Analysis">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../config/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../analysis/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

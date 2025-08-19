@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Surrogates (pkg) - Semiotic Conjecture</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Surrogates (pkg)";
+        var mkdocs_page_input_path = "api/surrogates.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Semiotic Conjecture
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Semiotic Conjecture</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../output_schema/">Output schema</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reporting/">Reporting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics (pkg)</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Surrogates (pkg)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates">surrogates</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.community">community</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.community.fleiss_kappa">fleiss_kappa</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.community.label_text">label_text</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.community.omega_and_rho">omega_and_rho</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.community.summarize">summarize</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.ollama_client">ollama_client</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient">OllamaClient</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient.embed">embed</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient.generate">generate</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient.nlp">nlp</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#community">community</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.community">community</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.community.fleiss_kappa">fleiss_kappa</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.community.label_text">label_text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.community.omega_and_rho">omega_and_rho</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.community.summarize">summarize</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ollama_client">ollama_client</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.ollama_client">ollama_client</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient">OllamaClient</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient.embed">embed</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient.generate">generate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#semiconj.surrogates.ollama_client.OllamaClient.nlp">nlp</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../semiotic/">Semiotic (pkg)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Semiotic Conjecture</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">Surrogates (pkg)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="surrogates-package">Surrogates Package<a class="headerlink" href="#surrogates-package" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="semiconj.surrogates"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="semiconj.surrogates.community" class="doc doc-heading">
+            <code>community</code>
+
+
+<a href="#semiconj.surrogates.community" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.community.fleiss_kappa" class="doc doc-heading">
+            <code class="highlight language-python">fleiss_kappa(assignments)</code>
+
+<a href="#semiconj.surrogates.community.fleiss_kappa" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute Fleiss' kappa for categorical labels.
+assignments: list of items, each is list of labels from raters.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def fleiss_kappa(assignments: List[List[str]]) -&gt; float:
+    """Compute Fleiss' kappa for categorical labels.
+    assignments: list of items, each is list of labels from raters.
+    """
+    if not assignments:
+        return 0.0
+    cats = sorted(set(c for row in assignments for c in row))
+    cat_idx = {c: i for i, c in enumerate(cats)}
+    n_cat = len(cats)
+    n = len(assignments)
+    m = len(assignments[0]) if assignments[0] else 0
+    if m == 0:
+        return 0.0
+    # count matrix n x k
+    nij = [[0] * n_cat for _ in range(n)]
+    for i, row in enumerate(assignments):
+        for lab in row:
+            nij[i][cat_idx[lab]] += 1
+    pj = [sum(nij[i][j] for i in range(n)) / (n * m) for j in range(n_cat)]
+    Pi = [
+        (sum(nij[i][j] * nij[i][j] for j in range(n_cat)) - m) / (m * (m - 1) + 1e-9)
+        for i in range(n)
+    ]
+    Pbar = sum(Pi) / n
+    Pe = sum(p * p for p in pj)
+    if Pe &gt;= 1.0:
+        return 0.0
+    return (Pbar - Pe) / (1.0 - Pe + 1e-9)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.community.label_text" class="doc doc-heading">
+            <code class="highlight language-python">label_text(text)</code>
+
+<a href="#semiconj.surrogates.community.label_text" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Heuristic domain labeler using keyword matching.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>text</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Input text to classify.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="str">str</span></code>
+              –
+              <div class="doc-md-description">
+                <p>One of LABELS: 'technology', 'biology', 'art', 'politics', 'finance', 'sports', or 'general'.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; label_text('The algorithm optimizes network throughput.')
+'technology'
+&gt;&gt;&gt; label_text('A canvas and painting techniques are discussed.')
+'art'</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def label_text(text: str) -&gt; str:
+    """Heuristic domain labeler using keyword matching.
+
+    Args:
+        text: Input text to classify.
+
+    Returns:
+        One of LABELS: 'technology', 'biology', 'art', 'politics', 'finance', 'sports', or 'general'.
+
+    Examples:
+        &gt;&gt;&gt; label_text('The algorithm optimizes network throughput.')
+        'technology'
+        &gt;&gt;&gt; label_text('A canvas and painting techniques are discussed.')
+        'art'
+    """
+    t = text.lower()
+    # lightweight keyword-based labeler
+    keywords = {
+        "technology": ["algorithm", "software", "network", "data", "model", "system"],
+        "biology": ["cell", "species", "genome", "protein", "organism"],
+        "art": ["painting", "poetry", "novel", "canvas", "aesthetic"],
+        "politics": ["election", "policy", "state", "government", "vote"],
+        "finance": ["market", "risk", "equity", "capital", "investment"],
+        "sports": ["match", "score", "team", "league", "coach"],
+    }
+    for lab, ks in keywords.items():
+        if any(k in t for k in ks):
+            return lab
+    return "general"</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.community.omega_and_rho" class="doc doc-heading">
+            <code class="highlight language-python">omega_and_rho(texts, contexts, k=12, strategy='ollama', models=None, ollama_host='http://localhost:11434')</code>
+
+<a href="#semiconj.surrogates.community.omega_and_rho" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute Ω(H) and ρ(C) across contexts for given texts.
+Returns (Omega_by_context, Rho_by_context).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def omega_and_rho(texts: List[str], contexts: List[str], k: int = 12, strategy: str = "ollama", models: List[str] = None, ollama_host: str = "http://localhost:11434") -&gt; Tuple[Dict[str, float], Dict[str, float]]:
+    """Compute Ω(H) and ρ(C) across contexts for given texts.
+    Returns (Omega_by_context, Rho_by_context).
+    """
+    if strategy == "ollama":
+        if not models:
+            raise ValueError("In 'ollama' mode, a non-empty list of models must be provided.")
+        comm = build_ollama_community(models=models, k=k, host=ollama_host)
+    else:
+        comm = build_community(k)
+    # Collect labels and summary vectors
+    per_context_labels: Dict[str, List[List[str]]] = {c: [] for c in contexts}
+    per_context_vecs: Dict[str, List[List[List[float]]]] = {c: [] for c in contexts}
+    for c in _tqdm(contexts, desc="Ω/ρ contexts", total=len(contexts)):
+        for t in _tqdm(texts, desc=f"{c} items", total=len(texts), leave=False):
+            labs = []
+            vecs = []
+            for h in comm:
+                lab, summ = h.produce(t, c)
+                labs.append(lab)
+                vecs.append(vec(summ))
+            per_context_labels[c].append(labs)
+            per_context_vecs[c].append(vecs)
+    # Ω(H): agreement + convergence mapped to [0,1]
+    omega: Dict[str, float] = {}
+    for c in contexts:
+        kappa = fleiss_kappa(per_context_labels[c])
+        # summary convergence: mean pairwise cosine among raters, averaged over items
+        sims = []
+        for item_vecs in per_context_vecs[c]:
+            m = len(item_vecs)
+            if m &lt; 2:
+                continue
+            item_sims = []
+            for i in range(m):
+                for j in range(i+1, m):
+                    item_sims.append(cosine(item_vecs[i], item_vecs[j]))
+            if item_sims:
+                sims.append(sum(item_sims) / len(item_sims))
+        conv = sum(sims) / len(sims) if sims else 0.0
+        # map to [0,1]
+        omega[c] = max(0.0, min(1.0, 0.5 * (kappa + conv)))
+    # ρ(C): 1 - var_H(C) / var_H(C_open)
+    # Measure variance of summary vectors across H, averaged across items
+    def variance_of_vectors(vecs: List[List[float]]) -&gt; float:
+        if not vecs:
+            return 0.0
+        d = len(vecs[0])
+        # component-wise variance average
+        means = [sum(v[i] for v in vecs) / len(vecs) for i in range(d)]
+        var = sum(sum((v[i] - means[i]) ** 2 for v in vecs) / len(vecs) for i in range(d)) / d
+        return var
+    var_by_context = {}
+    for c in contexts:
+        item_vars = [variance_of_vectors(vv) for vv in per_context_vecs[c]]
+        var_by_context[c] = sum(item_vars) / len(item_vars) if item_vars else 0.0
+    if "C_open" not in var_by_context:
+        raise ValueError("Context 'C_open' is required to compute rho baseline.")
+    base = var_by_context["C_open"]
+    if base &lt;= 0.0:
+        # Degenerate case: no variance across H in the open context; define rho as 0 for all contexts
+        rho = {c: 0.0 for c in contexts}
+        return omega, rho
+    rho: Dict[str, float] = {}
+    for c in contexts:
+        rho[c] = max(0.0, min(1.0, 1.0 - (var_by_context[c] / base)))
+    return omega, rho</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.community.summarize" class="doc doc-heading">
+            <code class="highlight language-python">summarize(text, n_sentences=1, seed=0)</code>
+
+<a href="#semiconj.surrogates.community.summarize" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extractive summary by selecting top-scoring sentences.</p>
+<p>Sentences are scored by the average term frequency of their unique tokens,
+with tiny random tie-breakers controlled by <code>seed</code>.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>text</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Input text to summarize.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>n_sentences</code></b>
+                  (<code><span title="int">int</span></code>, default:
+                      <code>1</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Number of sentences to include in the summary (&gt;=1).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>seed</code></b>
+                  (<code><span title="int">int</span></code>, default:
+                      <code>0</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Random seed for tie-breaking.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="str">str</span></code>
+              –
+              <div class="doc-md-description">
+                <p>A string containing the selected sentence(s), joined by '. '. If the text</p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="str">str</span></code>
+              –
+              <div class="doc-md-description">
+                <p>has no sentence-like delimiters, returns the stripped input.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; summarize('A. B. C.', n_sentences=2, seed=0)
+'A. B'</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def summarize(text: str, n_sentences: int = 1, seed: int = 0) -&gt; str:
+    """Extractive summary by selecting top-scoring sentences.
+
+    Sentences are scored by the average term frequency of their unique tokens,
+    with tiny random tie-breakers controlled by ``seed``.
+
+    Args:
+        text: Input text to summarize.
+        n_sentences: Number of sentences to include in the summary (&gt;=1).
+        seed: Random seed for tie-breaking.
+
+    Returns:
+        A string containing the selected sentence(s), joined by '. '. If the text
+        has no sentence-like delimiters, returns the stripped input.
+
+    Examples:
+        &gt;&gt;&gt; summarize('A. B. C.', n_sentences=2, seed=0)
+        'A. B'
+    """
+    # Simple extractive summary: pick highest-average TF word sentences, randomized tie-breakers
+    sents = [s for s in text.split('.') if s.strip()]
+    if not sents:
+        return text.strip()
+    toks = [tokenize(s) for s in sents]
+    tf = Counter([w for ts in toks for w in ts])
+    scores = []
+    rnd = random.Random(seed)
+    for i, ts in enumerate(toks):
+        score = sum(tf[w] for w in set(ts)) / max(1, len(set(ts)))
+        score += 1e-3 * rnd.random()
+        scores.append((score, i))
+    scores.sort(reverse=True)
+    idxs = sorted(i for _, i in scores[:n_sentences])
+    return '. '.join(sents[i].strip() for i in idxs)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="semiconj.surrogates.ollama_client" class="doc doc-heading">
+            <code>ollama_client</code>
+
+
+<a href="#semiconj.surrogates.ollama_client" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="semiconj.surrogates.ollama_client.OllamaClient" class="doc doc-heading">
+            <code>OllamaClient</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+                <pre class="highlight"><code class="language-python">@dataclass
+class OllamaClient:
+    host: str = "http://localhost:11434"
+
+    # Internal reusable clients/sessions for efficiency
+    _py_client: Optional[object] = None  # ollama.Client when available
+    _session: Optional[object] = None   # requests.Session when requests available
+
+    def _get_py_client(self):
+        if ollama is None:
+            return None
+        if self._py_client is None:
+            try:
+                self._py_client = ollama.Client(host=self.host)
+            except Exception:
+                self._py_client = None
+        return self._py_client
+
+    def _get_session(self):
+        if requests is None:
+            return None
+        if self._session is None:
+            try:
+                import requests as _rq  # type: ignore
+                self._session = _rq.Session()
+            except Exception:
+                self._session = None
+        return self._session
+
+    def generate(self, model: str, prompt: str, system: Optional[str] = None, temperature: float = 0.7, seed: Optional[int] = None) -&gt; str:
+        """Generate non-streamed output using the Ollama Python client if available, else HTTP.
+        """
+        options = {"temperature": float(temperature)}
+        if seed is not None:
+            options["seed"] = int(seed)
+
+        last_err: Optional[Exception] = None
+
+        # Preferred path: official ollama Python client
+        py_client = self._get_py_client()
+        if py_client is not None:
+            for attempt in range(1, 4):
+                try:
+                    logger.debug(f"Ollama(py) generate (attempt {attempt}) model={model}")
+                    data = py_client.generate(model=model, prompt=prompt, system=system, options=options)
+                    return str(data.get("response", "")).strip()
+                except Exception as e:
+                    last_err = e
+                    wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                    logger.warning(f"Ollama(py) call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                    time.sleep(wait)
+        # Fallback: HTTP API via requests
+        payload = {
+            "model": model,
+            "prompt": prompt,
+            "stream": False,
+            "options": options,
+        }
+        if system:
+            payload["system"] = system
+        if requests is None:
+            raise RuntimeError(
+                "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+            )
+        url = self.host.rstrip('/') + "/api/generate"
+        session = self._get_session()
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model}")
+                if session is not None:
+                    resp = session.post(url, json=payload, timeout=60)  # type: ignore
+                else:
+                    resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+                resp.raise_for_status()
+                data = resp.json()
+                return str(data.get("response", "")).strip()
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+        raise RuntimeError(
+            "Ollama call failed after retries. Ensure the server is running and the model is pulled. "
+            f"Last error: {last_err}"
+        )
+
+    def embed(self, model: str, text: str) -&gt; List[float]:
+        """Return a single embedding vector for the text via ollama Python client if available, else HTTP.
+        """
+        last_err: Optional[Exception] = None
+        # Preferred path: official ollama Python client
+        py_client = self._get_py_client()
+        if py_client is not None:
+            for attempt in range(1, 4):
+                try:
+                    logger.debug(f"Ollama(py) embeddings (attempt {attempt}) model={model} len(text)={len(text)}")
+                    data = py_client.embeddings(model=model, input=text)
+                    emb = data.get("embedding")
+                    if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                        raise ValueError("Unexpected embeddings response schema from ollama(py)")
+                    return [float(x) for x in emb]
+                except Exception as e:
+                    last_err = e
+                    wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                    logger.warning(f"Ollama(py) embeddings failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                    time.sleep(wait)
+        # Fallback: HTTP API via requests
+        if requests is None:
+            raise RuntimeError(
+                "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+            )
+        url = self.host.rstrip('/') + "/api/embeddings"
+        payload = {"model": model, "input": text}
+        session = self._get_session()
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model} len(text)={len(text)}")
+                if session is not None:
+                    resp = session.post(url, json=payload, timeout=60)  # type: ignore
+                else:
+                    resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+                resp.raise_for_status()
+                data = resp.json()
+                emb = data.get("embedding")
+                if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                    raise ValueError("Unexpected embeddings response schema")
+                return [float(x) for x in emb]
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama embeddings HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+        raise RuntimeError(
+            "Ollama embeddings call failed after retries. Ensure the server is running and the model is pulled. "
+            f"Last error: {last_err}"
+        )
+
+
+    def nlp(self, model: str, text: str) -&gt; dict:
+        """Perform basic NLP with an Ollama instruct model (e.g., gpt-oss).
+        Returns a dict with keys: tokens (list[str]), sentences (list[str]), entities (list[{text,type}]).
+        Strict JSON parsing with minimal recovery (extract first {...}).
+        """
+        system = (
+            "You are an NLP annotator. Respond in strict JSON only with keys: "
+            "tokens (array of strings), sentences (array of strings), entities (array of objects with 'text' and 'type')."
+        )
+        prompt = (
+            "Text to annotate:\n" + text.strip() + "\n\n"
+            "Produce JSON exactly in this schema: {\"tokens\":[...],\"sentences\":[...],\"entities\":[{\"text\":\"...\",\"type\":\"...\"}]}"
+        )
+        raw = self.generate(model=model, prompt=prompt, system=system, temperature=0.0)
+        # Extract JSON object
+        start = raw.find('{')
+        end = raw.rfind('}')
+        if start == -1 or end == -1 or end &lt;= start:
+            raise ValueError("Ollama NLP response is not strict JSON.")
+        try:
+            obj = json.loads(raw[start:end+1])
+        except Exception as e:
+            raise ValueError("Failed to parse JSON from Ollama NLP response.") from e
+        tokens = obj.get("tokens", [])
+        sentences = obj.get("sentences", [])
+        entities = obj.get("entities", [])
+        # Basic validation
+        if not isinstance(tokens, list) or not all(isinstance(t, str) for t in tokens):
+            tokens = []
+        if not isinstance(sentences, list) or not all(isinstance(s, str) for s in sentences):
+            sentences = []
+        if not isinstance(entities, list):
+            entities = []
+        # Normalize entity items
+        norm_entities = []
+        for e in entities:
+            try:
+                txt = str(e.get("text", ""))
+                typ = str(e.get("type", ""))
+                if txt:
+                    norm_entities.append({"text": txt, "type": typ})
+            except Exception:
+                continue
+        return {"tokens": tokens, "sentences": sentences, "entities": norm_entities}
+
+    # ---------------------- Prompting and parsing helpers ----------------------
+
+    def parse_label_summary(self, raw: str, allowed_labels: List[str]) -&gt; Tuple[str, str]:
+        txt = raw.strip()
+        start = txt.find('{')
+        end = txt.rfind('}')
+        if start == -1 or end == -1 or end &lt;= start:
+            raise ValueError("Ollama response is not strict JSON with 'label' and 'summary' fields.")
+        try:
+            obj = json.loads(txt[start:end+1])
+        except Exception as e:
+            raise ValueError("Failed to parse JSON from Ollama response.") from e
+        label = str(obj.get("label", "")).strip()
+        summary = str(obj.get("summary", "")).strip()
+        if not label or not summary:
+            raise ValueError("Ollama JSON must contain non-empty 'label' and 'summary'.")
+        if label not in allowed_labels:
+            raise ValueError(f"Label '{label}' not in allowed set: {allowed_labels}")
+        return label, summary</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="semiconj.surrogates.ollama_client.OllamaClient.embed" class="doc doc-heading">
+            <code class="highlight language-python">embed(model, text)</code>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient.embed" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return a single embedding vector for the text via ollama Python client if available, else HTTP.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+              <pre class="highlight"><code class="language-python">def embed(self, model: str, text: str) -&gt; List[float]:
+    """Return a single embedding vector for the text via ollama Python client if available, else HTTP.
+    """
+    last_err: Optional[Exception] = None
+    # Preferred path: official ollama Python client
+    py_client = self._get_py_client()
+    if py_client is not None:
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama(py) embeddings (attempt {attempt}) model={model} len(text)={len(text)}")
+                data = py_client.embeddings(model=model, input=text)
+                emb = data.get("embedding")
+                if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                    raise ValueError("Unexpected embeddings response schema from ollama(py)")
+                return [float(x) for x in emb]
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama(py) embeddings failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+    # Fallback: HTTP API via requests
+    if requests is None:
+        raise RuntimeError(
+            "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+        )
+    url = self.host.rstrip('/') + "/api/embeddings"
+    payload = {"model": model, "input": text}
+    session = self._get_session()
+    for attempt in range(1, 4):
+        try:
+            logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model} len(text)={len(text)}")
+            if session is not None:
+                resp = session.post(url, json=payload, timeout=60)  # type: ignore
+            else:
+                resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+            resp.raise_for_status()
+            data = resp.json()
+            emb = data.get("embedding")
+            if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                raise ValueError("Unexpected embeddings response schema")
+            return [float(x) for x in emb]
+        except Exception as e:
+            last_err = e
+            wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+            logger.warning(f"Ollama embeddings HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+            time.sleep(wait)
+    raise RuntimeError(
+        "Ollama embeddings call failed after retries. Ensure the server is running and the model is pulled. "
+        f"Last error: {last_err}"
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="semiconj.surrogates.ollama_client.OllamaClient.generate" class="doc doc-heading">
+            <code class="highlight language-python">generate(model, prompt, system=None, temperature=0.7, seed=None)</code>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient.generate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate non-streamed output using the Ollama Python client if available, else HTTP.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+              <pre class="highlight"><code class="language-python">def generate(self, model: str, prompt: str, system: Optional[str] = None, temperature: float = 0.7, seed: Optional[int] = None) -&gt; str:
+    """Generate non-streamed output using the Ollama Python client if available, else HTTP.
+    """
+    options = {"temperature": float(temperature)}
+    if seed is not None:
+        options["seed"] = int(seed)
+
+    last_err: Optional[Exception] = None
+
+    # Preferred path: official ollama Python client
+    py_client = self._get_py_client()
+    if py_client is not None:
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama(py) generate (attempt {attempt}) model={model}")
+                data = py_client.generate(model=model, prompt=prompt, system=system, options=options)
+                return str(data.get("response", "")).strip()
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama(py) call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+    # Fallback: HTTP API via requests
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "stream": False,
+        "options": options,
+    }
+    if system:
+        payload["system"] = system
+    if requests is None:
+        raise RuntimeError(
+            "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+        )
+    url = self.host.rstrip('/') + "/api/generate"
+    session = self._get_session()
+    for attempt in range(1, 4):
+        try:
+            logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model}")
+            if session is not None:
+                resp = session.post(url, json=payload, timeout=60)  # type: ignore
+            else:
+                resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+            resp.raise_for_status()
+            data = resp.json()
+            return str(data.get("response", "")).strip()
+        except Exception as e:
+            last_err = e
+            wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+            logger.warning(f"Ollama HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+            time.sleep(wait)
+    raise RuntimeError(
+        "Ollama call failed after retries. Ensure the server is running and the model is pulled. "
+        f"Last error: {last_err}"
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="semiconj.surrogates.ollama_client.OllamaClient.nlp" class="doc doc-heading">
+            <code class="highlight language-python">nlp(model, text)</code>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient.nlp" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Perform basic NLP with an Ollama instruct model (e.g., gpt-oss).
+Returns a dict with keys: tokens (list[str]), sentences (list[str]), entities (list[{text,type}]).
+Strict JSON parsing with minimal recovery (extract first {...}).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+              <pre class="highlight"><code class="language-python">def nlp(self, model: str, text: str) -&gt; dict:
+    """Perform basic NLP with an Ollama instruct model (e.g., gpt-oss).
+    Returns a dict with keys: tokens (list[str]), sentences (list[str]), entities (list[{text,type}]).
+    Strict JSON parsing with minimal recovery (extract first {...}).
+    """
+    system = (
+        "You are an NLP annotator. Respond in strict JSON only with keys: "
+        "tokens (array of strings), sentences (array of strings), entities (array of objects with 'text' and 'type')."
+    )
+    prompt = (
+        "Text to annotate:\n" + text.strip() + "\n\n"
+        "Produce JSON exactly in this schema: {\"tokens\":[...],\"sentences\":[...],\"entities\":[{\"text\":\"...\",\"type\":\"...\"}]}"
+    )
+    raw = self.generate(model=model, prompt=prompt, system=system, temperature=0.0)
+    # Extract JSON object
+    start = raw.find('{')
+    end = raw.rfind('}')
+    if start == -1 or end == -1 or end &lt;= start:
+        raise ValueError("Ollama NLP response is not strict JSON.")
+    try:
+        obj = json.loads(raw[start:end+1])
+    except Exception as e:
+        raise ValueError("Failed to parse JSON from Ollama NLP response.") from e
+    tokens = obj.get("tokens", [])
+    sentences = obj.get("sentences", [])
+    entities = obj.get("entities", [])
+    # Basic validation
+    if not isinstance(tokens, list) or not all(isinstance(t, str) for t in tokens):
+        tokens = []
+    if not isinstance(sentences, list) or not all(isinstance(s, str) for s in sentences):
+        sentences = []
+    if not isinstance(entities, list):
+        entities = []
+    # Normalize entity items
+    norm_entities = []
+    for e in entities:
+        try:
+            txt = str(e.get("text", ""))
+            typ = str(e.get("type", ""))
+            if txt:
+                norm_entities.append({"text": txt, "type": typ})
+        except Exception:
+            continue
+    return {"tokens": tokens, "sentences": sentences, "entities": norm_entities}</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="submodules">Submodules<a class="headerlink" href="#submodules" title="Permanent link">&para;</a></h2>
+<h3 id="community">community<a class="headerlink" href="#community" title="Permanent link">&para;</a></h3>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="semiconj.surrogates.community"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.surrogates.community.fleiss_kappa" class="doc doc-heading">
+            <code class="highlight language-python">fleiss_kappa(assignments)</code>
+
+<a href="#semiconj.surrogates.community.fleiss_kappa" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute Fleiss' kappa for categorical labels.
+assignments: list of items, each is list of labels from raters.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def fleiss_kappa(assignments: List[List[str]]) -&gt; float:
+    """Compute Fleiss' kappa for categorical labels.
+    assignments: list of items, each is list of labels from raters.
+    """
+    if not assignments:
+        return 0.0
+    cats = sorted(set(c for row in assignments for c in row))
+    cat_idx = {c: i for i, c in enumerate(cats)}
+    n_cat = len(cats)
+    n = len(assignments)
+    m = len(assignments[0]) if assignments[0] else 0
+    if m == 0:
+        return 0.0
+    # count matrix n x k
+    nij = [[0] * n_cat for _ in range(n)]
+    for i, row in enumerate(assignments):
+        for lab in row:
+            nij[i][cat_idx[lab]] += 1
+    pj = [sum(nij[i][j] for i in range(n)) / (n * m) for j in range(n_cat)]
+    Pi = [
+        (sum(nij[i][j] * nij[i][j] for j in range(n_cat)) - m) / (m * (m - 1) + 1e-9)
+        for i in range(n)
+    ]
+    Pbar = sum(Pi) / n
+    Pe = sum(p * p for p in pj)
+    if Pe &gt;= 1.0:
+        return 0.0
+    return (Pbar - Pe) / (1.0 - Pe + 1e-9)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.surrogates.community.label_text" class="doc doc-heading">
+            <code class="highlight language-python">label_text(text)</code>
+
+<a href="#semiconj.surrogates.community.label_text" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Heuristic domain labeler using keyword matching.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>text</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Input text to classify.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="str">str</span></code>
+              –
+              <div class="doc-md-description">
+                <p>One of LABELS: 'technology', 'biology', 'art', 'politics', 'finance', 'sports', or 'general'.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; label_text('The algorithm optimizes network throughput.')
+'technology'
+&gt;&gt;&gt; label_text('A canvas and painting techniques are discussed.')
+'art'</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def label_text(text: str) -&gt; str:
+    """Heuristic domain labeler using keyword matching.
+
+    Args:
+        text: Input text to classify.
+
+    Returns:
+        One of LABELS: 'technology', 'biology', 'art', 'politics', 'finance', 'sports', or 'general'.
+
+    Examples:
+        &gt;&gt;&gt; label_text('The algorithm optimizes network throughput.')
+        'technology'
+        &gt;&gt;&gt; label_text('A canvas and painting techniques are discussed.')
+        'art'
+    """
+    t = text.lower()
+    # lightweight keyword-based labeler
+    keywords = {
+        "technology": ["algorithm", "software", "network", "data", "model", "system"],
+        "biology": ["cell", "species", "genome", "protein", "organism"],
+        "art": ["painting", "poetry", "novel", "canvas", "aesthetic"],
+        "politics": ["election", "policy", "state", "government", "vote"],
+        "finance": ["market", "risk", "equity", "capital", "investment"],
+        "sports": ["match", "score", "team", "league", "coach"],
+    }
+    for lab, ks in keywords.items():
+        if any(k in t for k in ks):
+            return lab
+    return "general"</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.surrogates.community.omega_and_rho" class="doc doc-heading">
+            <code class="highlight language-python">omega_and_rho(texts, contexts, k=12, strategy='ollama', models=None, ollama_host='http://localhost:11434')</code>
+
+<a href="#semiconj.surrogates.community.omega_and_rho" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute Ω(H) and ρ(C) across contexts for given texts.
+Returns (Omega_by_context, Rho_by_context).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def omega_and_rho(texts: List[str], contexts: List[str], k: int = 12, strategy: str = "ollama", models: List[str] = None, ollama_host: str = "http://localhost:11434") -&gt; Tuple[Dict[str, float], Dict[str, float]]:
+    """Compute Ω(H) and ρ(C) across contexts for given texts.
+    Returns (Omega_by_context, Rho_by_context).
+    """
+    if strategy == "ollama":
+        if not models:
+            raise ValueError("In 'ollama' mode, a non-empty list of models must be provided.")
+        comm = build_ollama_community(models=models, k=k, host=ollama_host)
+    else:
+        comm = build_community(k)
+    # Collect labels and summary vectors
+    per_context_labels: Dict[str, List[List[str]]] = {c: [] for c in contexts}
+    per_context_vecs: Dict[str, List[List[List[float]]]] = {c: [] for c in contexts}
+    for c in _tqdm(contexts, desc="Ω/ρ contexts", total=len(contexts)):
+        for t in _tqdm(texts, desc=f"{c} items", total=len(texts), leave=False):
+            labs = []
+            vecs = []
+            for h in comm:
+                lab, summ = h.produce(t, c)
+                labs.append(lab)
+                vecs.append(vec(summ))
+            per_context_labels[c].append(labs)
+            per_context_vecs[c].append(vecs)
+    # Ω(H): agreement + convergence mapped to [0,1]
+    omega: Dict[str, float] = {}
+    for c in contexts:
+        kappa = fleiss_kappa(per_context_labels[c])
+        # summary convergence: mean pairwise cosine among raters, averaged over items
+        sims = []
+        for item_vecs in per_context_vecs[c]:
+            m = len(item_vecs)
+            if m &lt; 2:
+                continue
+            item_sims = []
+            for i in range(m):
+                for j in range(i+1, m):
+                    item_sims.append(cosine(item_vecs[i], item_vecs[j]))
+            if item_sims:
+                sims.append(sum(item_sims) / len(item_sims))
+        conv = sum(sims) / len(sims) if sims else 0.0
+        # map to [0,1]
+        omega[c] = max(0.0, min(1.0, 0.5 * (kappa + conv)))
+    # ρ(C): 1 - var_H(C) / var_H(C_open)
+    # Measure variance of summary vectors across H, averaged across items
+    def variance_of_vectors(vecs: List[List[float]]) -&gt; float:
+        if not vecs:
+            return 0.0
+        d = len(vecs[0])
+        # component-wise variance average
+        means = [sum(v[i] for v in vecs) / len(vecs) for i in range(d)]
+        var = sum(sum((v[i] - means[i]) ** 2 for v in vecs) / len(vecs) for i in range(d)) / d
+        return var
+    var_by_context = {}
+    for c in contexts:
+        item_vars = [variance_of_vectors(vv) for vv in per_context_vecs[c]]
+        var_by_context[c] = sum(item_vars) / len(item_vars) if item_vars else 0.0
+    if "C_open" not in var_by_context:
+        raise ValueError("Context 'C_open' is required to compute rho baseline.")
+    base = var_by_context["C_open"]
+    if base &lt;= 0.0:
+        # Degenerate case: no variance across H in the open context; define rho as 0 for all contexts
+        rho = {c: 0.0 for c in contexts}
+        return omega, rho
+    rho: Dict[str, float] = {}
+    for c in contexts:
+        rho[c] = max(0.0, min(1.0, 1.0 - (var_by_context[c] / base)))
+    return omega, rho</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.surrogates.community.summarize" class="doc doc-heading">
+            <code class="highlight language-python">summarize(text, n_sentences=1, seed=0)</code>
+
+<a href="#semiconj.surrogates.community.summarize" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extractive summary by selecting top-scoring sentences.</p>
+<p>Sentences are scored by the average term frequency of their unique tokens,
+with tiny random tie-breakers controlled by <code>seed</code>.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>text</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Input text to summarize.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>n_sentences</code></b>
+                  (<code><span title="int">int</span></code>, default:
+                      <code>1</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Number of sentences to include in the summary (&gt;=1).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>seed</code></b>
+                  (<code><span title="int">int</span></code>, default:
+                      <code>0</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Random seed for tie-breaking.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="str">str</span></code>
+              –
+              <div class="doc-md-description">
+                <p>A string containing the selected sentence(s), joined by '. '. If the text</p>
+              </div>
+            </li>
+            <li>
+                  <code><span title="str">str</span></code>
+              –
+              <div class="doc-md-description">
+                <p>has no sentence-like delimiters, returns the stripped input.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <pre class="highlight"><code class="language-pycon">&gt;&gt;&gt; summarize('A. B. C.', n_sentences=2, seed=0)
+'A. B'</code></pre>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/community.py</code></summary>
+              <pre class="highlight"><code class="language-python">def summarize(text: str, n_sentences: int = 1, seed: int = 0) -&gt; str:
+    """Extractive summary by selecting top-scoring sentences.
+
+    Sentences are scored by the average term frequency of their unique tokens,
+    with tiny random tie-breakers controlled by ``seed``.
+
+    Args:
+        text: Input text to summarize.
+        n_sentences: Number of sentences to include in the summary (&gt;=1).
+        seed: Random seed for tie-breaking.
+
+    Returns:
+        A string containing the selected sentence(s), joined by '. '. If the text
+        has no sentence-like delimiters, returns the stripped input.
+
+    Examples:
+        &gt;&gt;&gt; summarize('A. B. C.', n_sentences=2, seed=0)
+        'A. B'
+    """
+    # Simple extractive summary: pick highest-average TF word sentences, randomized tie-breakers
+    sents = [s for s in text.split('.') if s.strip()]
+    if not sents:
+        return text.strip()
+    toks = [tokenize(s) for s in sents]
+    tf = Counter([w for ts in toks for w in ts])
+    scores = []
+    rnd = random.Random(seed)
+    for i, ts in enumerate(toks):
+        score = sum(tf[w] for w in set(ts)) / max(1, len(set(ts)))
+        score += 1e-3 * rnd.random()
+        scores.append((score, i))
+    scores.sort(reverse=True)
+    idxs = sorted(i for _, i in scores[:n_sentences])
+    return '. '.join(sents[i].strip() for i in idxs)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h3 id="ollama_client">ollama_client<a class="headerlink" href="#ollama_client" title="Permanent link">&para;</a></h3>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="semiconj.surrogates.ollama_client"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="semiconj.surrogates.ollama_client.OllamaClient" class="doc doc-heading">
+            <code>OllamaClient</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+                <pre class="highlight"><code class="language-python">@dataclass
+class OllamaClient:
+    host: str = "http://localhost:11434"
+
+    # Internal reusable clients/sessions for efficiency
+    _py_client: Optional[object] = None  # ollama.Client when available
+    _session: Optional[object] = None   # requests.Session when requests available
+
+    def _get_py_client(self):
+        if ollama is None:
+            return None
+        if self._py_client is None:
+            try:
+                self._py_client = ollama.Client(host=self.host)
+            except Exception:
+                self._py_client = None
+        return self._py_client
+
+    def _get_session(self):
+        if requests is None:
+            return None
+        if self._session is None:
+            try:
+                import requests as _rq  # type: ignore
+                self._session = _rq.Session()
+            except Exception:
+                self._session = None
+        return self._session
+
+    def generate(self, model: str, prompt: str, system: Optional[str] = None, temperature: float = 0.7, seed: Optional[int] = None) -&gt; str:
+        """Generate non-streamed output using the Ollama Python client if available, else HTTP.
+        """
+        options = {"temperature": float(temperature)}
+        if seed is not None:
+            options["seed"] = int(seed)
+
+        last_err: Optional[Exception] = None
+
+        # Preferred path: official ollama Python client
+        py_client = self._get_py_client()
+        if py_client is not None:
+            for attempt in range(1, 4):
+                try:
+                    logger.debug(f"Ollama(py) generate (attempt {attempt}) model={model}")
+                    data = py_client.generate(model=model, prompt=prompt, system=system, options=options)
+                    return str(data.get("response", "")).strip()
+                except Exception as e:
+                    last_err = e
+                    wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                    logger.warning(f"Ollama(py) call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                    time.sleep(wait)
+        # Fallback: HTTP API via requests
+        payload = {
+            "model": model,
+            "prompt": prompt,
+            "stream": False,
+            "options": options,
+        }
+        if system:
+            payload["system"] = system
+        if requests is None:
+            raise RuntimeError(
+                "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+            )
+        url = self.host.rstrip('/') + "/api/generate"
+        session = self._get_session()
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model}")
+                if session is not None:
+                    resp = session.post(url, json=payload, timeout=60)  # type: ignore
+                else:
+                    resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+                resp.raise_for_status()
+                data = resp.json()
+                return str(data.get("response", "")).strip()
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+        raise RuntimeError(
+            "Ollama call failed after retries. Ensure the server is running and the model is pulled. "
+            f"Last error: {last_err}"
+        )
+
+    def embed(self, model: str, text: str) -&gt; List[float]:
+        """Return a single embedding vector for the text via ollama Python client if available, else HTTP.
+        """
+        last_err: Optional[Exception] = None
+        # Preferred path: official ollama Python client
+        py_client = self._get_py_client()
+        if py_client is not None:
+            for attempt in range(1, 4):
+                try:
+                    logger.debug(f"Ollama(py) embeddings (attempt {attempt}) model={model} len(text)={len(text)}")
+                    data = py_client.embeddings(model=model, input=text)
+                    emb = data.get("embedding")
+                    if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                        raise ValueError("Unexpected embeddings response schema from ollama(py)")
+                    return [float(x) for x in emb]
+                except Exception as e:
+                    last_err = e
+                    wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                    logger.warning(f"Ollama(py) embeddings failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                    time.sleep(wait)
+        # Fallback: HTTP API via requests
+        if requests is None:
+            raise RuntimeError(
+                "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+            )
+        url = self.host.rstrip('/') + "/api/embeddings"
+        payload = {"model": model, "input": text}
+        session = self._get_session()
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model} len(text)={len(text)}")
+                if session is not None:
+                    resp = session.post(url, json=payload, timeout=60)  # type: ignore
+                else:
+                    resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+                resp.raise_for_status()
+                data = resp.json()
+                emb = data.get("embedding")
+                if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                    raise ValueError("Unexpected embeddings response schema")
+                return [float(x) for x in emb]
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama embeddings HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+        raise RuntimeError(
+            "Ollama embeddings call failed after retries. Ensure the server is running and the model is pulled. "
+            f"Last error: {last_err}"
+        )
+
+
+    def nlp(self, model: str, text: str) -&gt; dict:
+        """Perform basic NLP with an Ollama instruct model (e.g., gpt-oss).
+        Returns a dict with keys: tokens (list[str]), sentences (list[str]), entities (list[{text,type}]).
+        Strict JSON parsing with minimal recovery (extract first {...}).
+        """
+        system = (
+            "You are an NLP annotator. Respond in strict JSON only with keys: "
+            "tokens (array of strings), sentences (array of strings), entities (array of objects with 'text' and 'type')."
+        )
+        prompt = (
+            "Text to annotate:\n" + text.strip() + "\n\n"
+            "Produce JSON exactly in this schema: {\"tokens\":[...],\"sentences\":[...],\"entities\":[{\"text\":\"...\",\"type\":\"...\"}]}"
+        )
+        raw = self.generate(model=model, prompt=prompt, system=system, temperature=0.0)
+        # Extract JSON object
+        start = raw.find('{')
+        end = raw.rfind('}')
+        if start == -1 or end == -1 or end &lt;= start:
+            raise ValueError("Ollama NLP response is not strict JSON.")
+        try:
+            obj = json.loads(raw[start:end+1])
+        except Exception as e:
+            raise ValueError("Failed to parse JSON from Ollama NLP response.") from e
+        tokens = obj.get("tokens", [])
+        sentences = obj.get("sentences", [])
+        entities = obj.get("entities", [])
+        # Basic validation
+        if not isinstance(tokens, list) or not all(isinstance(t, str) for t in tokens):
+            tokens = []
+        if not isinstance(sentences, list) or not all(isinstance(s, str) for s in sentences):
+            sentences = []
+        if not isinstance(entities, list):
+            entities = []
+        # Normalize entity items
+        norm_entities = []
+        for e in entities:
+            try:
+                txt = str(e.get("text", ""))
+                typ = str(e.get("type", ""))
+                if txt:
+                    norm_entities.append({"text": txt, "type": typ})
+            except Exception:
+                continue
+        return {"tokens": tokens, "sentences": sentences, "entities": norm_entities}
+
+    # ---------------------- Prompting and parsing helpers ----------------------
+
+    def parse_label_summary(self, raw: str, allowed_labels: List[str]) -&gt; Tuple[str, str]:
+        txt = raw.strip()
+        start = txt.find('{')
+        end = txt.rfind('}')
+        if start == -1 or end == -1 or end &lt;= start:
+            raise ValueError("Ollama response is not strict JSON with 'label' and 'summary' fields.")
+        try:
+            obj = json.loads(txt[start:end+1])
+        except Exception as e:
+            raise ValueError("Failed to parse JSON from Ollama response.") from e
+        label = str(obj.get("label", "")).strip()
+        summary = str(obj.get("summary", "")).strip()
+        if not label or not summary:
+            raise ValueError("Ollama JSON must contain non-empty 'label' and 'summary'.")
+        if label not in allowed_labels:
+            raise ValueError(f"Label '{label}' not in allowed set: {allowed_labels}")
+        return label, summary</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.ollama_client.OllamaClient.embed" class="doc doc-heading">
+            <code class="highlight language-python">embed(model, text)</code>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient.embed" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return a single embedding vector for the text via ollama Python client if available, else HTTP.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+              <pre class="highlight"><code class="language-python">def embed(self, model: str, text: str) -&gt; List[float]:
+    """Return a single embedding vector for the text via ollama Python client if available, else HTTP.
+    """
+    last_err: Optional[Exception] = None
+    # Preferred path: official ollama Python client
+    py_client = self._get_py_client()
+    if py_client is not None:
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama(py) embeddings (attempt {attempt}) model={model} len(text)={len(text)}")
+                data = py_client.embeddings(model=model, input=text)
+                emb = data.get("embedding")
+                if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                    raise ValueError("Unexpected embeddings response schema from ollama(py)")
+                return [float(x) for x in emb]
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama(py) embeddings failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+    # Fallback: HTTP API via requests
+    if requests is None:
+        raise RuntimeError(
+            "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+        )
+    url = self.host.rstrip('/') + "/api/embeddings"
+    payload = {"model": model, "input": text}
+    session = self._get_session()
+    for attempt in range(1, 4):
+        try:
+            logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model} len(text)={len(text)}")
+            if session is not None:
+                resp = session.post(url, json=payload, timeout=60)  # type: ignore
+            else:
+                resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+            resp.raise_for_status()
+            data = resp.json()
+            emb = data.get("embedding")
+            if not isinstance(emb, list) or not all(isinstance(x, (int, float)) for x in emb):
+                raise ValueError("Unexpected embeddings response schema")
+            return [float(x) for x in emb]
+        except Exception as e:
+            last_err = e
+            wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+            logger.warning(f"Ollama embeddings HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+            time.sleep(wait)
+    raise RuntimeError(
+        "Ollama embeddings call failed after retries. Ensure the server is running and the model is pulled. "
+        f"Last error: {last_err}"
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.ollama_client.OllamaClient.generate" class="doc doc-heading">
+            <code class="highlight language-python">generate(model, prompt, system=None, temperature=0.7, seed=None)</code>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient.generate" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate non-streamed output using the Ollama Python client if available, else HTTP.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+              <pre class="highlight"><code class="language-python">def generate(self, model: str, prompt: str, system: Optional[str] = None, temperature: float = 0.7, seed: Optional[int] = None) -&gt; str:
+    """Generate non-streamed output using the Ollama Python client if available, else HTTP.
+    """
+    options = {"temperature": float(temperature)}
+    if seed is not None:
+        options["seed"] = int(seed)
+
+    last_err: Optional[Exception] = None
+
+    # Preferred path: official ollama Python client
+    py_client = self._get_py_client()
+    if py_client is not None:
+        for attempt in range(1, 4):
+            try:
+                logger.debug(f"Ollama(py) generate (attempt {attempt}) model={model}")
+                data = py_client.generate(model=model, prompt=prompt, system=system, options=options)
+                return str(data.get("response", "")).strip()
+            except Exception as e:
+                last_err = e
+                wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+                logger.warning(f"Ollama(py) call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+                time.sleep(wait)
+    # Fallback: HTTP API via requests
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "stream": False,
+        "options": options,
+    }
+    if system:
+        payload["system"] = system
+    if requests is None:
+        raise RuntimeError(
+            "Ollama Python client and 'requests' are unavailable. Install 'ollama' or 'requests' to call the API."
+        )
+    url = self.host.rstrip('/') + "/api/generate"
+    session = self._get_session()
+    for attempt in range(1, 4):
+        try:
+            logger.debug(f"Ollama HTTP POST {url} (attempt {attempt}) model={model}")
+            if session is not None:
+                resp = session.post(url, json=payload, timeout=60)  # type: ignore
+            else:
+                resp = requests.post(url, json=payload, timeout=60)  # type: ignore
+            resp.raise_for_status()
+            data = resp.json()
+            return str(data.get("response", "")).strip()
+        except Exception as e:
+            last_err = e
+            wait = min(5.0, 0.5 * (2 ** (attempt - 1)))
+            logger.warning(f"Ollama HTTP call failed (attempt {attempt}): {e}. Retrying in {wait:.1f}s...")
+            time.sleep(wait)
+    raise RuntimeError(
+        "Ollama call failed after retries. Ensure the server is running and the model is pulled. "
+        f"Last error: {last_err}"
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="semiconj.surrogates.ollama_client.OllamaClient.nlp" class="doc doc-heading">
+            <code class="highlight language-python">nlp(model, text)</code>
+
+<a href="#semiconj.surrogates.ollama_client.OllamaClient.nlp" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Perform basic NLP with an Ollama instruct model (e.g., gpt-oss).
+Returns a dict with keys: tokens (list[str]), sentences (list[str]), entities (list[{text,type}]).
+Strict JSON parsing with minimal recovery (extract first {...}).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/surrogates/ollama_client.py</code></summary>
+              <pre class="highlight"><code class="language-python">def nlp(self, model: str, text: str) -&gt; dict:
+    """Perform basic NLP with an Ollama instruct model (e.g., gpt-oss).
+    Returns a dict with keys: tokens (list[str]), sentences (list[str]), entities (list[{text,type}]).
+    Strict JSON parsing with minimal recovery (extract first {...}).
+    """
+    system = (
+        "You are an NLP annotator. Respond in strict JSON only with keys: "
+        "tokens (array of strings), sentences (array of strings), entities (array of objects with 'text' and 'type')."
+    )
+    prompt = (
+        "Text to annotate:\n" + text.strip() + "\n\n"
+        "Produce JSON exactly in this schema: {\"tokens\":[...],\"sentences\":[...],\"entities\":[{\"text\":\"...\",\"type\":\"...\"}]}"
+    )
+    raw = self.generate(model=model, prompt=prompt, system=system, temperature=0.0)
+    # Extract JSON object
+    start = raw.find('{')
+    end = raw.rfind('}')
+    if start == -1 or end == -1 or end &lt;= start:
+        raise ValueError("Ollama NLP response is not strict JSON.")
+    try:
+        obj = json.loads(raw[start:end+1])
+    except Exception as e:
+        raise ValueError("Failed to parse JSON from Ollama NLP response.") from e
+    tokens = obj.get("tokens", [])
+    sentences = obj.get("sentences", [])
+    entities = obj.get("entities", [])
+    # Basic validation
+    if not isinstance(tokens, list) or not all(isinstance(t, str) for t in tokens):
+        tokens = []
+    if not isinstance(sentences, list) or not all(isinstance(s, str) for s in sentences):
+        sentences = []
+    if not isinstance(entities, list):
+        entities = []
+    # Normalize entity items
+    norm_entities = []
+    for e in entities:
+        try:
+            txt = str(e.get("text", ""))
+            typ = str(e.get("type", ""))
+            if txt:
+                norm_entities.append({"text": txt, "type": typ})
+        except Exception:
+            continue
+    return {"tokens": tokens, "sentences": sentences, "entities": norm_entities}</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../metrics/" class="btn btn-neutral float-left" title="Metrics (pkg)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../semiotic/" class="btn btn-neutral float-right" title="Semiotic (pkg)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../metrics/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../semiotic/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
