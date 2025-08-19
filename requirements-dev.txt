@@ -1,0 +1,8 @@
+pytest>=8.0.0,<9
+mypy>=1.7.0,<2
+ruff>=0.4.0,<1
+flake8>=6.1.0,<7
+black>=24.4.0,<25
+pre-commit>=3.7.0,<4
+types-requests>=2.31.0.10,<3
+types-six>=1.16.21.9,<2
