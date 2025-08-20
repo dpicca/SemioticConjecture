@@ -23,7 +23,8 @@ from semiconj.metrics.codeswitch import codeswitch_index
 from semiconj.semiotic.parser import compute_d_intr, split_sentences, words
 from semiconj.surrogates.community import omega_and_rho
 from semiconj.frontier import estimate_frontier
-from semiconj.reporting import save_metrics, maybe_plot_frontier
+from semiconj.reporting import save_metrics
+from semiconj.plotting import plot_frontier_legacy, plot_correlation_legacy, generate_all_plots
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +141,7 @@ def run_pipeline(input_csv: Path, out_dir: Path, k: int = 12, surrogates: str = 
     frontier_pts = estimate_frontier(S_values, D_mean)
     save_metrics(out_dir / "Frontier.csv", [{"S_bin": s, "k95": k} for s, k in frontier_pts])
     logger.info("Estimated frontier with %d points", len(frontier_pts))
-    maybe_plot_frontier(out_dir / "frontier.png", frontier_pts)
+    plot_frontier_legacy(out_dir / "frontier.png", frontier_pts)
     logger.info("Frontier plot saved to %s", out_dir / "frontier.png")
     # 7) Analyses (H1 example)
     logger.info("Running analyses (e.g., Kendall tau)...")
@@ -148,6 +149,12 @@ def run_pipeline(input_csv: Path, out_dir: Path, k: int = 12, surrogates: str = 
     tau = kendall_tau(S_values, D_intr_values)
     logger.info("Kendall_tau_S_vs_Dintr = %.6f", tau)
     save_metrics(out_dir / "Analyses.csv", [{"metric": "Kendall_tau_S_vs_Dintr", "value": tau}])
+    plot_correlation_legacy(out_dir / "kendall_tau_correlation.png", S_values, D_intr_values, tau, "S(M) - Semiotic Complexity", "D_intr(M) - Intrinsic Decodability")
+    logger.info("Kendall tau correlation plot saved to %s", out_dir / "kendall_tau_correlation.png")
+    # 8) Generate all comprehensive plots automatically
+    logger.info("Generating comprehensive plots for all CSV files...")
+    generate_all_plots(out_dir)
+    logger.info("All plots generated successfully")
     logger.info("Pipeline finished. Outputs written to %s", out_dir)
 
 
@@ -172,7 +179,7 @@ def main():
     ap.add_argument("--ollama-models", type=str, default="", help="Comma-separated Ollama model names (>=3 families recommended)")
     ap.add_argument("--ollama-host", type=str, default="http://localhost:11434", help="Ollama server host URL")
     ap.add_argument("--figures-ollama-model", type=str, default="gpt-oss", help="If set, compute figures_score using this Ollama model (expects JSON {\"score\": <0..1>})")
-    ap.add_argument("--embeddings-ollama-model", type=str, default="", help="If set, compute sentence embeddings via this Ollama model (e.g., 'nomic-embed-text')")
+    ap.add_argument("--embeddings-ollama-model", type=str, default="nomic-embed-text:v1.5", help="If set, compute sentence embeddings via this Ollama model (e.g., 'nomic-embed-text')")
     ap.add_argument("--nlp-ollama-model", type=str, default="gpt-oss", help="If set, perform tokenization, sentence splitting, and NER via this Ollama model (e.g., 'gpt-oss')")
     # Config overrides
     ap.add_argument("--seed", type=int, default=42, help="Global random seed (affects stochastic components)")
