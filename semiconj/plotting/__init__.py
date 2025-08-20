@@ -25,6 +25,16 @@ def safe_import_matplotlib():
         raise ImportError("matplotlib and numpy are required for plotting. Install with: pip install matplotlib numpy") from e
 
 
+def check_plotting_dependencies() -> bool:
+    """Check if plotting dependencies are available without raising exceptions."""
+    try:
+        import matplotlib.pyplot
+        import numpy
+        return True
+    except ImportError:
+        return False
+
+
 def load_csv_data(csv_path: Path) -> Tuple[List[str], List[Dict[str, Any]]]:
     """Load CSV data and return headers and rows.
     
@@ -217,11 +227,125 @@ def create_heatmap(headers: List[str], rows: List[Dict[str, Any]],
 def create_metric_display(headers: List[str], rows: List[Dict[str, Any]], 
                          output_path: Path, title: str = "Statistical Metrics") -> None:
     """Create display for statistical metrics (Analyses data)."""
-    plt, _, _ = safe_import_matplotlib()
+    plt, patches, np = safe_import_matplotlib()
     
     metrics = [row['metric'] for row in rows]
     values = [row['value'] for row in rows]
     
+    # Check if we have correlation metrics that need special treatment
+    correlation_metrics = ['kendall_tau', 'pearson', 'spearman', 'correlation']
+    is_correlation = any(any(corr_type in metric.lower() for corr_type in correlation_metrics) for metric in metrics)
+    
+    if len(metrics) == 1 and is_correlation:
+        # Special visualization for single correlation metric
+        create_correlation_gauge(metrics[0], values[0], output_path, title, plt, patches, np)
+    else:
+        # Default bar chart for multiple metrics or non-correlation metrics
+        create_standard_metric_display(metrics, values, output_path, title, plt, np)
+
+
+def create_correlation_gauge(metric: str, value: float, output_path: Path, title: str, plt, patches, np) -> None:
+    """Create a gauge-style display for correlation metrics."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+    
+    # Left panel: Gauge visualization
+    ax1.set_xlim(-1.2, 1.2)
+    ax1.set_ylim(-0.3, 1.2)
+    
+    # Draw correlation scale background
+    theta = np.linspace(0, np.pi, 100)
+    x_arc = np.cos(theta)
+    y_arc = np.sin(theta)
+    ax1.plot(x_arc, y_arc, 'k-', linewidth=2, alpha=0.3)
+    
+    # Color zones for interpretation
+    zones = [
+        (-1.0, -0.7, '#d32f2f', 'Strong Negative'),
+        (-0.7, -0.3, '#ff9800', 'Moderate Negative'),
+        (-0.3, 0.3, '#ffc107', 'Weak/No Correlation'),
+        (0.3, 0.7, '#4caf50', 'Moderate Positive'),
+        (0.7, 1.0, '#2e7d32', 'Strong Positive')
+    ]
+    
+    for start, end, color, label in zones:
+        mask = (x_arc >= start) & (x_arc <= end)
+        if np.any(mask):
+            ax1.fill_between(x_arc[mask], 0, y_arc[mask], color=color, alpha=0.3)
+    
+    # Draw needle pointing to the actual value
+    if -1 <= value <= 1:
+        angle = np.arccos(value)  # value to angle conversion
+        needle_x = [0, np.cos(angle)]
+        needle_y = [0, np.sin(angle)]
+        ax1.plot(needle_x, needle_y, 'r-', linewidth=4, marker='o', markersize=8, markerfacecolor='red')
+    
+    # Add scale labels
+    scale_positions = [-1, -0.5, 0, 0.5, 1]
+    for pos in scale_positions:
+        if pos >= -1 and pos <= 1:
+            angle = np.arccos(pos)
+            x_pos = 1.1 * np.cos(angle)
+            y_pos = 1.1 * np.sin(angle)
+            ax1.text(x_pos, y_pos, f'{pos:.1f}', ha='center', va='center', fontsize=10, fontweight='bold')
+    
+    # Add value display
+    ax1.text(0, -0.2, f'{value:.6f}', ha='center', va='center', fontsize=16, fontweight='bold',
+             bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="black"))
+    
+    ax1.set_aspect('equal')
+    ax1.axis('off')
+    ax1.set_title('Correlation Strength', fontsize=14, fontweight='bold', pad=20)
+    
+    # Right panel: Interpretation text
+    ax2.axis('off')
+    
+    # Determine interpretation
+    abs_value = abs(value)
+    direction = "positive" if value > 0 else "negative" if value < 0 else "no"
+    
+    if abs_value >= 0.7:
+        strength = "strong"
+        color = '#2e7d32' if value > 0 else '#d32f2f'
+    elif abs_value >= 0.3:
+        strength = "moderate"
+        color = '#4caf50' if value > 0 else '#ff9800'
+    else:
+        strength = "weak"
+        color = '#ffc107'
+    
+    interpretation_text = f"""
+Metric: {metric.replace('_', ' ').title()}
+Value: {value:.6f}
+
+Interpretation:
+• Direction: {direction.title()} correlation
+• Strength: {strength.title()}
+• Magnitude: {abs_value:.3f}
+
+Meaning:
+"""
+    
+    if abs_value < 0.1:
+        interpretation_text += "• No meaningful relationship\n• Variables are independent"
+    elif abs_value < 0.3:
+        interpretation_text += "• Weak relationship\n• Limited predictive value"
+    elif abs_value < 0.7:
+        interpretation_text += "• Moderate relationship\n• Some predictive value"
+    else:
+        interpretation_text += "• Strong relationship\n• High predictive value"
+    
+    ax2.text(0.05, 0.95, interpretation_text, transform=ax2.transAxes, fontsize=11,
+             verticalalignment='top', bbox=dict(boxstyle="round,pad=0.5", facecolor=color, alpha=0.1))
+    
+    plt.suptitle(title, fontsize=16, fontweight='bold')
+    plt.tight_layout()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    plt.close()
+
+
+def create_standard_metric_display(metrics: List[str], values: List[float], output_path: Path, title: str, plt, np) -> None:
+    """Create standard bar chart display for multiple metrics."""
     fig, ax = plt.subplots(figsize=(10, 6))
     bars = ax.bar(range(len(metrics)), values, alpha=0.8)
     ax.set_xticks(range(len(metrics)))
@@ -345,6 +469,13 @@ def generate_all_plots(out_dir: Path, plot_dir: Optional[Path] = None) -> None:
         out_dir: Directory containing CSV files to plot.
         plot_dir: Directory to save plots (defaults to out_dir/plots).
     """
+    # Check plotting dependencies first
+    if not check_plotting_dependencies():
+        logger.error("Cannot generate plots: matplotlib and numpy are required but not installed.")
+        logger.error("Install plotting dependencies with: pip install matplotlib numpy")
+        logger.error("Alternatively, install with: pip install -r requirements-plot.txt")
+        return
+    
     if plot_dir is None:
         plot_dir = out_dir / "plots"
     
@@ -353,12 +484,26 @@ def generate_all_plots(out_dir: Path, plot_dir: Optional[Path] = None) -> None:
     # Find all CSV files except cleaned_input.csv
     csv_files = [f for f in out_dir.glob("*.csv") if f.name != "cleaned_input.csv"]
     
+    if not csv_files:
+        logger.warning(f"No CSV files found in {out_dir} for plotting")
+        return
+    
     logger.info(f"Generating plots for {len(csv_files)} CSV files in {plot_dir}")
     
+    success_count = 0
     for csv_file in csv_files:
-        plot_csv_file(csv_file, plot_dir)
+        try:
+            plot_csv_file(csv_file, plot_dir)
+            success_count += 1
+        except Exception as e:
+            logger.error(f"Failed to create plot for {csv_file.name}: {e}")
     
-    logger.info(f"Plot generation complete. {len(csv_files)} plots saved to {plot_dir}")
+    if success_count == len(csv_files):
+        logger.info(f"Plot generation complete. All {success_count} plots saved successfully to {plot_dir}")
+    elif success_count > 0:
+        logger.warning(f"Plot generation complete with errors. {success_count}/{len(csv_files)} plots saved to {plot_dir}")
+    else:
+        logger.error(f"Plot generation failed. No plots were created from {len(csv_files)} CSV files.")
 
 
 # Legacy compatibility functions (replacements for semiconj.reporting functions)

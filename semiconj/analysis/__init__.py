@@ -20,6 +20,7 @@ def kendall_tau(x: List[float], y: List[float]) -> float:
     """
     try:
         from scipy.stats import kendalltau  # type: ignore
+        from scipy.stats import spearmanr
     except Exception as e:
         raise ImportError("scipy is required for kendall_tau. Install scipy.") from e
     r, _ = kendalltau(x, y)
@@ -42,6 +43,13 @@ def spearman_rho(x: List[float], y: List[float]) -> float:
         >>> round(spearman_rho([1, 2, 3], [10, 20, 30]), 6)
         1.0
     """
+
+    try:
+        from scipy.stats import spearmanr
+    except Exception as e:
+        raise ImportError("scipy is required for spearman. Install scipy.") from e
+    r, _ = spearmanr(x, y)
+    return float(r or 0.0)
     n = len(x)
     if n == 0:
         return 0.0

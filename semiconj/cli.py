@@ -145,12 +145,20 @@ def run_pipeline(input_csv: Path, out_dir: Path, k: int = 12, surrogates: str = 
     logger.info("Frontier plot saved to %s", out_dir / "frontier.png")
     # 7) Analyses (H1 example)
     logger.info("Running analyses (e.g., Kendall tau)...")
+
     from semiconj.analysis import kendall_tau
     tau = kendall_tau(S_values, D_intr_values)
     logger.info("Kendall_tau_S_vs_Dintr = %.6f", tau)
-    save_metrics(out_dir / "Analyses.csv", [{"metric": "Kendall_tau_S_vs_Dintr", "value": tau}])
+    save_metrics(out_dir / "Analyses_kendall_tau.csv", [{"metric": "Kendall_tau_S_vs_Dintr", "value": tau}])
     plot_correlation_legacy(out_dir / "kendall_tau_correlation.png", S_values, D_intr_values, tau, "S(M) - Semiotic Complexity", "D_intr(M) - Intrinsic Decodability")
     logger.info("Kendall tau correlation plot saved to %s", out_dir / "kendall_tau_correlation.png")
+
+    from semiconj.analysis import spearman_rho
+    spearman = spearman_rho(S_values, D_intr_values)
+    logger.info("spearman_rho_S_vs_Dintr = %.6f", spearman)
+    save_metrics(out_dir / "Analyses_spearman.csv", [{"metric": "spearman_S_vs_Dintr", "value": spearman}])
+    logger.info("Spearman  correlation plot saved to %s", out_dir / "kendall_tau_correlation.png")
+
     # 8) Generate all comprehensive plots automatically
     logger.info("Generating comprehensive plots for all CSV files...")
     generate_all_plots(out_dir)
