@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Reporting - Semiotic Conjecture</title>
+    <title>Reporting (pkg) - Semiotic Conjecture</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,7 +13,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Reporting";
+        var mkdocs_page_name = "Reporting (pkg)";
         var mkdocs_page_input_path = "api/reporting.md";
         var mkdocs_page_url = null;
       </script>
@@ -54,17 +54,17 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier (pkg)</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Reporting</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Reporting (pkg)</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#semiconj.reporting">reporting</a>
     </li>
@@ -73,6 +73,8 @@
     <li class="toctree-l2"><a class="reference internal" href="#semiconj.reporting.save_metrics">save_metrics</a>
     </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nlp_cache/">NLP cache (pkg)</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics (pkg)</a>
                   </li>
@@ -96,7 +98,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">API</li>
-      <li class="breadcrumb-item active">Reporting</li>
+      <li class="breadcrumb-item active">Reporting (pkg)</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -218,7 +220,7 @@
 
 
             <details class="quote">
-              <summary>Source code in <code>semiconj/reporting.py</code></summary>
+              <summary>Source code in <code>semiconj/reporting/__init__.py</code></summary>
               <pre class="highlight"><code class="language-python">def maybe_plot_frontier(path: Path, frontier_points: List[tuple]) -&gt; None:
     """Plot the estimated frontier points and save the figure.
 
@@ -313,7 +315,7 @@ union of keys across rows and formats floats to 6 decimals.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>semiconj/reporting.py</code></summary>
+              <summary>Source code in <code>semiconj/reporting/__init__.py</code></summary>
               <pre class="highlight"><code class="language-python">def save_metrics(path: Path, rows: Iterable[Dict[str, object]]) -&gt; None:
     """Save a sequence of metric rows to CSV.
 
@@ -349,8 +351,8 @@ union of keys across rows and formats floats to 6 decimals.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../frontier/" class="btn btn-neutral float-left" title="Frontier"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../metrics/" class="btn btn-neutral float-right" title="Metrics (pkg)">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../frontier/" class="btn btn-neutral float-left" title="Frontier (pkg)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../nlp_cache/" class="btn btn-neutral float-right" title="NLP cache (pkg)">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -376,7 +378,7 @@ union of keys across rows and formats floats to 6 decimals.</p>
       <span><a href="../frontier/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../metrics/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../nlp_cache/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

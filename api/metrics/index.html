@@ -54,17 +54,19 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier (pkg)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../reporting/">Reporting</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../reporting/">Reporting (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nlp_cache/">NLP cache (pkg)</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Metrics (pkg)</a>
     <ul class="current">
@@ -514,8 +516,9 @@ Note: This function returns a raw MTLD-like score, not normalized to [0,1].</p>
 
         <p>Named-entity coverage in [0,1].</p>
 <p>Behavior:
-- If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-- Otherwise, fall back to a capitalization-based heuristic proxy.</p>
+- Prefer cached result from central NLP cache.
+- If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+- Otherwise, fall back to capitalization heuristic and cache the result.</p>
 
 
             <details class="quote">
@@ -524,37 +527,51 @@ Note: This function returns a raw MTLD-like score, not normalized to [0,1].</p>
     """Named-entity coverage in [0,1].
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-    - Otherwise, fall back to a capitalization-based heuristic proxy.
+    - Prefer cached result from central NLP cache.
+    - If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+    - Otherwise, fall back to capitalization heuristic and cache the result.
     """
+    # Try cached value first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                ents = res.get("entities", [])
-                toks = res.get("tokens", [])
-                total = len(toks) if isinstance(toks, list) and toks else None
-                if isinstance(ents, list) and ents:
-                    if not total:
-                        # If tokenizer not provided or empty, estimate using regex length
-                        total = len(re.findall(r"[\w']+", text))
-                    total = max(1, int(total or 0))
-                    cov = len(ents) / total
-                    return max(0.0, min(1.0, cov))
-            except Exception:
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached_cov = get_cached_field(text, "ner_coverage")
+        if isinstance(cached_cov, (int, float)):
+            return float(cached_cov)
+        # Attempt to use a single cached Ollama nlp() result
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            ents = res.get("entities", [])
+            toks = res.get("tokens", [])
+            total = len(toks) if isinstance(toks, list) and toks else None
+            if isinstance(ents, list) and ents:
+                if not total:
+                    total = len(re.findall(r"[\w']+", text))
+                total = max(1, int(total or 0))
+                cov = len(ents) / total
+                cov = max(0.0, min(1.0, cov))
+                set_cached_field(text, "ner_coverage", cov)
+                return cov
     except Exception:
         pass
+
+    # Fallback heuristic; also cache the result
     tokens = re.findall(r"[\w']+", text)
     if not tokens:
-        return 0.0
+        cov = 0.0
+        try:
+            from ..nlp_cache import set_cached_field  # type: ignore
+            set_cached_field(text, "ner_coverage", cov)
+        except Exception:
+            pass
+        return cov
     ent_like = [t for t in tokens if t[0:1].isupper() and t.lower() not in {"i"}]
-    return min(1.0, len(ent_like) / max(1, len(tokens)))</code></pre>
+    cov = min(1.0, len(ent_like) / max(1, len(tokens)))
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "ner_coverage", cov)
+    except Exception:
+        pass
+    return cov</code></pre>
             </details>
     </div>
 
@@ -1238,8 +1255,9 @@ Raises ImportError/LookupError if NLTK or its WordNet data is missing.</p>
 
         <p>Tokenize text.</p>
 <p>Behavior:
-- If an Ollama NLP model is configured (e.g., 'gpt-oss'), use it to obtain tokens.
-- Otherwise, fall back to a simple regex-based tokenizer.</p>
+- Prefer cached results (from centralized NLP cache) to avoid recomputation.
+- If an Ollama NLP model is configured, use a single nlp() call cached per text.
+- Otherwise, fall back to a simple regex-based tokenizer and cache locally.</p>
 
 
             <details class="quote">
@@ -1248,32 +1266,36 @@ Raises ImportError/LookupError if NLTK or its WordNet data is missing.</p>
     """Tokenize text.
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use it to obtain tokens.
-    - Otherwise, fall back to a simple regex-based tokenizer.
+    - Prefer cached results (from centralized NLP cache) to avoid recomputation.
+    - If an Ollama NLP model is configured, use a single nlp() call cached per text.
+    - Otherwise, fall back to a simple regex-based tokenizer and cache locally.
     """
+    # Try cache first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                toks = res.get("tokens", [])
-                if isinstance(toks, list) and toks:
-                    # Normalize to lower-case to preserve previous behavior
-                    return [str(t).lower() for t in toks if isinstance(t, str)]
-            except Exception:
-                # fall back to regex below
-                logging.getLogger(__name__).warning(
-                    f"Ollama NLP model '{model}' not found. Falling back to regex-based tokenization."
-                )
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached = get_cached_field(text, "tokens")
+        if isinstance(cached, list) and cached:
+            return list(cached)
+        # Ensure a single Ollama NLP call if configured
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            toks = res.get("tokens")
+            if isinstance(toks, list) and toks:
+                norm = [str(t).lower() for t in toks if isinstance(t, str)]
+                set_cached_field(text, "tokens", norm)
+                return norm
     except Exception:
-        # If config import fails for any reason, use regex
+        # fall back to original logic
         pass
-    return _WORD_RE.findall(text.lower())</code></pre>
+
+    # Original behavior (regex-based), also cache the result
+    toks = _WORD_RE.findall(text.lower())
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "tokens", toks)
+    except Exception:
+        pass
+    return toks</code></pre>
             </details>
     </div>
 
@@ -2001,8 +2023,9 @@ Multi-domain coverage increases intertextuality.</p>
 
         <p>Named-entity coverage in [0,1].</p>
 <p>Behavior:
-- If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-- Otherwise, fall back to a capitalization-based heuristic proxy.</p>
+- Prefer cached result from central NLP cache.
+- If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+- Otherwise, fall back to capitalization heuristic and cache the result.</p>
 
 
             <details class="quote">
@@ -2011,37 +2034,51 @@ Multi-domain coverage increases intertextuality.</p>
     """Named-entity coverage in [0,1].
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-    - Otherwise, fall back to a capitalization-based heuristic proxy.
+    - Prefer cached result from central NLP cache.
+    - If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+    - Otherwise, fall back to capitalization heuristic and cache the result.
     """
+    # Try cached value first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                ents = res.get("entities", [])
-                toks = res.get("tokens", [])
-                total = len(toks) if isinstance(toks, list) and toks else None
-                if isinstance(ents, list) and ents:
-                    if not total:
-                        # If tokenizer not provided or empty, estimate using regex length
-                        total = len(re.findall(r"[\w']+", text))
-                    total = max(1, int(total or 0))
-                    cov = len(ents) / total
-                    return max(0.0, min(1.0, cov))
-            except Exception:
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached_cov = get_cached_field(text, "ner_coverage")
+        if isinstance(cached_cov, (int, float)):
+            return float(cached_cov)
+        # Attempt to use a single cached Ollama nlp() result
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            ents = res.get("entities", [])
+            toks = res.get("tokens", [])
+            total = len(toks) if isinstance(toks, list) and toks else None
+            if isinstance(ents, list) and ents:
+                if not total:
+                    total = len(re.findall(r"[\w']+", text))
+                total = max(1, int(total or 0))
+                cov = len(ents) / total
+                cov = max(0.0, min(1.0, cov))
+                set_cached_field(text, "ner_coverage", cov)
+                return cov
     except Exception:
         pass
+
+    # Fallback heuristic; also cache the result
     tokens = re.findall(r"[\w']+", text)
     if not tokens:
-        return 0.0
+        cov = 0.0
+        try:
+            from ..nlp_cache import set_cached_field  # type: ignore
+            set_cached_field(text, "ner_coverage", cov)
+        except Exception:
+            pass
+        return cov
     ent_like = [t for t in tokens if t[0:1].isupper() and t.lower() not in {"i"}]
-    return min(1.0, len(ent_like) / max(1, len(tokens)))</code></pre>
+    cov = min(1.0, len(ent_like) / max(1, len(tokens)))
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "ner_coverage", cov)
+    except Exception:
+        pass
+    return cov</code></pre>
             </details>
     </div>
 
@@ -2436,8 +2473,9 @@ Raises ImportError/LookupError if NLTK or its WordNet data is missing.</p>
 
         <p>Tokenize text.</p>
 <p>Behavior:
-- If an Ollama NLP model is configured (e.g., 'gpt-oss'), use it to obtain tokens.
-- Otherwise, fall back to a simple regex-based tokenizer.</p>
+- Prefer cached results (from centralized NLP cache) to avoid recomputation.
+- If an Ollama NLP model is configured, use a single nlp() call cached per text.
+- Otherwise, fall back to a simple regex-based tokenizer and cache locally.</p>
 
 
             <details class="quote">
@@ -2446,32 +2484,36 @@ Raises ImportError/LookupError if NLTK or its WordNet data is missing.</p>
     """Tokenize text.
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use it to obtain tokens.
-    - Otherwise, fall back to a simple regex-based tokenizer.
+    - Prefer cached results (from centralized NLP cache) to avoid recomputation.
+    - If an Ollama NLP model is configured, use a single nlp() call cached per text.
+    - Otherwise, fall back to a simple regex-based tokenizer and cache locally.
     """
+    # Try cache first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                toks = res.get("tokens", [])
-                if isinstance(toks, list) and toks:
-                    # Normalize to lower-case to preserve previous behavior
-                    return [str(t).lower() for t in toks if isinstance(t, str)]
-            except Exception:
-                # fall back to regex below
-                logging.getLogger(__name__).warning(
-                    f"Ollama NLP model '{model}' not found. Falling back to regex-based tokenization."
-                )
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached = get_cached_field(text, "tokens")
+        if isinstance(cached, list) and cached:
+            return list(cached)
+        # Ensure a single Ollama NLP call if configured
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            toks = res.get("tokens")
+            if isinstance(toks, list) and toks:
+                norm = [str(t).lower() for t in toks if isinstance(t, str)]
+                set_cached_field(text, "tokens", norm)
+                return norm
     except Exception:
-        # If config import fails for any reason, use regex
+        # fall back to original logic
         pass
-    return _WORD_RE.findall(text.lower())</code></pre>
+
+    # Original behavior (regex-based), also cache the result
+    toks = _WORD_RE.findall(text.lower())
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "tokens", toks)
+    except Exception:
+        pass
+    return toks</code></pre>
             </details>
     </div>
 
@@ -3183,8 +3225,9 @@ Multi-domain coverage increases intertextuality.</p>
 
         <p>Named-entity coverage in [0,1].</p>
 <p>Behavior:
-- If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-- Otherwise, fall back to a capitalization-based heuristic proxy.</p>
+- Prefer cached result from central NLP cache.
+- If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+- Otherwise, fall back to capitalization heuristic and cache the result.</p>
 
 
             <details class="quote">
@@ -3193,37 +3236,51 @@ Multi-domain coverage increases intertextuality.</p>
     """Named-entity coverage in [0,1].
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-    - Otherwise, fall back to a capitalization-based heuristic proxy.
+    - Prefer cached result from central NLP cache.
+    - If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+    - Otherwise, fall back to capitalization heuristic and cache the result.
     """
+    # Try cached value first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                ents = res.get("entities", [])
-                toks = res.get("tokens", [])
-                total = len(toks) if isinstance(toks, list) and toks else None
-                if isinstance(ents, list) and ents:
-                    if not total:
-                        # If tokenizer not provided or empty, estimate using regex length
-                        total = len(re.findall(r"[\w']+", text))
-                    total = max(1, int(total or 0))
-                    cov = len(ents) / total
-                    return max(0.0, min(1.0, cov))
-            except Exception:
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached_cov = get_cached_field(text, "ner_coverage")
+        if isinstance(cached_cov, (int, float)):
+            return float(cached_cov)
+        # Attempt to use a single cached Ollama nlp() result
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            ents = res.get("entities", [])
+            toks = res.get("tokens", [])
+            total = len(toks) if isinstance(toks, list) and toks else None
+            if isinstance(ents, list) and ents:
+                if not total:
+                    total = len(re.findall(r"[\w']+", text))
+                total = max(1, int(total or 0))
+                cov = len(ents) / total
+                cov = max(0.0, min(1.0, cov))
+                set_cached_field(text, "ner_coverage", cov)
+                return cov
     except Exception:
         pass
+
+    # Fallback heuristic; also cache the result
     tokens = re.findall(r"[\w']+", text)
     if not tokens:
-        return 0.0
+        cov = 0.0
+        try:
+            from ..nlp_cache import set_cached_field  # type: ignore
+            set_cached_field(text, "ner_coverage", cov)
+        except Exception:
+            pass
+        return cov
     ent_like = [t for t in tokens if t[0:1].isupper() and t.lower() not in {"i"}]
-    return min(1.0, len(ent_like) / max(1, len(tokens)))</code></pre>
+    cov = min(1.0, len(ent_like) / max(1, len(tokens)))
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "ner_coverage", cov)
+    except Exception:
+        pass
+    return cov</code></pre>
             </details>
     </div>
 
@@ -3240,7 +3297,7 @@ Multi-domain coverage increases intertextuality.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../reporting/" class="btn btn-neutral float-left" title="Reporting"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../nlp_cache/" class="btn btn-neutral float-left" title="NLP cache (pkg)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../surrogates/" class="btn btn-neutral float-right" title="Surrogates (pkg)">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -3264,7 +3321,7 @@ Multi-domain coverage increases intertextuality.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../reporting/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../nlp_cache/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../surrogates/" style="color: #fcfcfc">Next &raquo;</a></span>

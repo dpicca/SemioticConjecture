@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>NLP cache (pkg) - Semiotic Conjecture</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "NLP cache (pkg)";
+        var mkdocs_page_input_path = "api/nlp_cache.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Semiotic Conjecture
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Semiotic Conjecture</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../output_schema/">Output schema</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../config/">Config (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../corpus/">Corpus (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../analysis/">Analysis (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decodability/">Decodability (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../frontier/">Frontier (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reporting/">Reporting (pkg)</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">NLP cache (pkg)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.nlp_cache">nlp_cache</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.nlp_cache.get_cached_field">get_cached_field</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.nlp_cache.get_nlp_result">get_nlp_result</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#semiconj.nlp_cache.set_cached_field">set_cached_field</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../surrogates/">Surrogates (pkg)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../semiotic/">Semiotic (pkg)</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Semiotic Conjecture</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">NLP cache (pkg)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="nlp-cache-package">NLP Cache Package<a class="headerlink" href="#nlp-cache-package" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="semiconj.nlp_cache"></a>
+    <div class="doc doc-contents first">
+
+        <p>Centralized NLP cache to avoid repeated heavy computations per text.</p>
+<p>This module provides lightweight, in-memory memoization for:
+- Results from Ollama client's nlp(model, text), if configured.
+- Locally computed fields (tokens, sentences, ner_coverage) when Ollama is not used.</p>
+<p>API:
+- get_nlp_result(text) -&gt; dict | None: returns and caches the Ollama nlp result if a model is configured.
+- get_cached_field(text, field) -&gt; Any | None: returns a cached field (e.g., 'tokens', 'sentences', 'entities', 'ner_coverage') if available.
+- set_cached_field(text, field, value) -&gt; None: stores a field for this text in the cache.</p>
+<p>The cache key includes the runtime model and host when Ollama-based NLP is enabled, so varying models/hosts don't collide.</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.nlp_cache.get_cached_field" class="doc doc-heading">
+            <code class="highlight language-python">get_cached_field(text, field)</code>
+
+<a href="#semiconj.nlp_cache.get_cached_field" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return a cached field if present, else None.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/nlp_cache/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def get_cached_field(text: str, field: str) -&gt; Any:
+    """Return a cached field if present, else None."""
+    return _get_bucket(text).get(field)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.nlp_cache.get_nlp_result" class="doc doc-heading">
+            <code class="highlight language-python">get_nlp_result(text)</code>
+
+<a href="#semiconj.nlp_cache.get_nlp_result" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>If an Ollama NLP model is configured, call client.nlp(model, text) ONCE per
+(model, host, text) and cache the entire result. Returns the JSON-like dict
+or None if no model is configured or the call fails.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/nlp_cache/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def get_nlp_result(text: str) -&gt; Dict[str, Any] | None:
+    """
+    If an Ollama NLP model is configured, call client.nlp(model, text) ONCE per
+    (model, host, text) and cache the entire result. Returns the JSON-like dict
+    or None if no model is configured or the call fails.
+    """
+    bucket = _get_bucket(text)
+    # Return cached full nlp result if present
+    if "nlp_result" in bucket:
+        return bucket["nlp_result"]
+
+    # Try to call Ollama NLP if configured
+    try:
+        from ..config import get_runtime_config  # lazy import
+        cfg = get_runtime_config()
+        model = getattr(cfg, "nlp_ollama_model", "").strip()
+        if not model:
+            return None
+        host = getattr(cfg, "nlp_ollama_host", "http://localhost:11434").strip()
+        try:
+            from ..surrogates.ollama_client import get_shared_client  # type: ignore
+            client = get_shared_client(host=host)
+            res = client.nlp(model=model, text=text)
+            if isinstance(res, dict):
+                # Normalize and place salient fields into bucket as well
+                bucket["nlp_result"] = res
+                toks = res.get("tokens")
+                if isinstance(toks, list):
+                    bucket.setdefault("tokens", [str(t).lower() for t in toks if isinstance(t, str)])
+                sents = res.get("sentences")
+                if isinstance(sents, list):
+                    norm_sents = [str(s).strip() for s in sents if str(s).strip()]
+                    bucket.setdefault("sentences", norm_sents)
+                ents = res.get("entities")
+                if isinstance(ents, list):
+                    bucket.setdefault("entities", ents)
+                return res
+        except Exception:
+            logger.warning("Ollama NLP call failed; proceeding without cached nlp_result.", exc_info=True)
+            return None
+    except Exception:
+        # No runtime config; treat as local
+        return None
+
+    return None</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="semiconj.nlp_cache.set_cached_field" class="doc doc-heading">
+            <code class="highlight language-python">set_cached_field(text, field, value)</code>
+
+<a href="#semiconj.nlp_cache.set_cached_field" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Store a field value in the cache for this text.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>semiconj/nlp_cache/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def set_cached_field(text: str, field: str, value: Any) -&gt; None:
+    """Store a field value in the cache for this text."""
+    _get_bucket(text)[field] = value</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../reporting/" class="btn btn-neutral float-left" title="Reporting (pkg)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../metrics/" class="btn btn-neutral float-right" title="Metrics (pkg)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../reporting/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../metrics/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
