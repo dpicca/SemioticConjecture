@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List
 import logging
 
-from .corpus import write_csv
+from ..corpus import write_csv
 
 logger = logging.getLogger(__name__)
 

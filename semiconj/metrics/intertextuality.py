@@ -17,37 +17,51 @@ def ner_coverage(text: str) -> float:
     """Named-entity coverage in [0,1].
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use its extracted entities.
-    - Otherwise, fall back to a capitalization-based heuristic proxy.
+    - Prefer cached result from central NLP cache.
+    - If Ollama NLP is configured, reuse a single cached nlp() call and compute once.
+    - Otherwise, fall back to capitalization heuristic and cache the result.
     """
+    # Try cached value first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                ents = res.get("entities", [])
-                toks = res.get("tokens", [])
-                total = len(toks) if isinstance(toks, list) and toks else None
-                if isinstance(ents, list) and ents:
-                    if not total:
-                        # If tokenizer not provided or empty, estimate using regex length
-                        total = len(re.findall(r"[\w']+", text))
-                    total = max(1, int(total or 0))
-                    cov = len(ents) / total
-                    return max(0.0, min(1.0, cov))
-            except Exception:
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached_cov = get_cached_field(text, "ner_coverage")
+        if isinstance(cached_cov, (int, float)):
+            return float(cached_cov)
+        # Attempt to use a single cached Ollama nlp() result
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            ents = res.get("entities", [])
+            toks = res.get("tokens", [])
+            total = len(toks) if isinstance(toks, list) and toks else None
+            if isinstance(ents, list) and ents:
+                if not total:
+                    total = len(re.findall(r"[\w']+", text))
+                total = max(1, int(total or 0))
+                cov = len(ents) / total
+                cov = max(0.0, min(1.0, cov))
+                set_cached_field(text, "ner_coverage", cov)
+                return cov
     except Exception:
         pass
+
+    # Fallback heuristic; also cache the result
     tokens = re.findall(r"[\w']+", text)
     if not tokens:
-        return 0.0
+        cov = 0.0
+        try:
+            from ..nlp_cache import set_cached_field  # type: ignore
+            set_cached_field(text, "ner_coverage", cov)
+        except Exception:
+            pass
+        return cov
     ent_like = [t for t in tokens if t[0:1].isupper() and t.lower() not in {"i"}]
-    return min(1.0, len(ent_like) / max(1, len(tokens)))
+    cov = min(1.0, len(ent_like) / max(1, len(tokens)))
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "ner_coverage", cov)
+    except Exception:
+        pass
+    return cov
 
 
 def domain_coverage_score(text: str) -> float:

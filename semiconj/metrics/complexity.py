@@ -12,32 +12,36 @@ def tokenize(text: str) -> List[str]:
     """Tokenize text.
 
     Behavior:
-    - If an Ollama NLP model is configured (e.g., 'gpt-oss'), use it to obtain tokens.
-    - Otherwise, fall back to a simple regex-based tokenizer.
+    - Prefer cached results (from centralized NLP cache) to avoid recomputation.
+    - If an Ollama NLP model is configured, use a single nlp() call cached per text.
+    - Otherwise, fall back to a simple regex-based tokenizer and cache locally.
     """
+    # Try cache first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                toks = res.get("tokens", [])
-                if isinstance(toks, list) and toks:
-                    # Normalize to lower-case to preserve previous behavior
-                    return [str(t).lower() for t in toks if isinstance(t, str)]
-            except Exception:
-                # fall back to regex below
-                logging.getLogger(__name__).warning(
-                    f"Ollama NLP model '{model}' not found. Falling back to regex-based tokenization."
-                )
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached = get_cached_field(text, "tokens")
+        if isinstance(cached, list) and cached:
+            return list(cached)
+        # Ensure a single Ollama NLP call if configured
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            toks = res.get("tokens")
+            if isinstance(toks, list) and toks:
+                norm = [str(t).lower() for t in toks if isinstance(t, str)]
+                set_cached_field(text, "tokens", norm)
+                return norm
     except Exception:
-        # If config import fails for any reason, use regex
+        # fall back to original logic
         pass
-    return _WORD_RE.findall(text.lower())
+
+    # Original behavior (regex-based), also cache the result
+    toks = _WORD_RE.findall(text.lower())
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "tokens", toks)
+    except Exception:
+        pass
+    return toks
 
 
 def mtld(tokens: List[str], ttr_threshold: float = 0.72, min_segment: int = 10) -> float:

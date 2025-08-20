@@ -21,28 +21,36 @@ def split_sentences(text: str) -> List[str]:
     """Split text into sentences.
 
     Behavior:
-    - If an Ollama NLP model is configured, use it to obtain sentence splits.
-    - Otherwise, fall back to a simple regex-based splitter.
+    - Prefer cached results (central NLP cache) to avoid recomputation.
+    - If an Ollama NLP model is configured, reuse a single cached nlp() call.
+    - Otherwise, fall back to regex-based split and cache locally.
     """
+    # Try cache first
     try:
-        from ..config import get_runtime_config
-        cfg = get_runtime_config()
-        model = getattr(cfg, "nlp_ollama_model", "").strip()
-        if model:
-            try:
-                from ..surrogates.ollama_client import get_shared_client  # type: ignore
-                client = get_shared_client(host=getattr(cfg, "nlp_ollama_host", "http://localhost:11434"))
-                res = client.nlp(model=model, text=text)
-                sents = res.get("sentences", [])
-                if isinstance(sents, list) and sents:
-                    return [str(s).strip() for s in sents if str(s).strip()]
-            except Exception:
-                logging.getLogger(__name__).warning('Failed to load Ollama NLP model. Falling back to regex-based sentence splitter.', exc_info=True)
-                pass
+        from ..nlp_cache import get_cached_field, set_cached_field, get_nlp_result  # type: ignore
+        cached = get_cached_field(text, "sentences")
+        if isinstance(cached, list) and cached:
+            return list(cached)
+        # Ensure at most one Ollama NLP call if configured
+        res = get_nlp_result(text)
+        if isinstance(res, dict):
+            sents = res.get("sentences")
+            if isinstance(sents, list) and sents:
+                norm = [str(s).strip() for s in sents if str(s).strip()]
+                set_cached_field(text, "sentences", norm)
+                return norm
     except Exception:
         pass
+
+    # Original behavior (regex-based), also cache the result
     parts = SENT_RE.split(text.strip())
-    return [p for p in parts if p]
+    out = [p for p in parts if p]
+    try:
+        from ..nlp_cache import set_cached_field  # type: ignore
+        set_cached_field(text, "sentences", out)
+    except Exception:
+        pass
+    return out
 
 
 def words(s: str) -> List[str]:

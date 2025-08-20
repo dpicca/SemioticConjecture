@@ -1,0 +1,44 @@
+site_name: Semiotic Conjecture
+site_description: API docs compiled from docstrings using mkdocstrings
+theme:
+  name: readthedocs
+nav:
+  - index.md
+  - Output schema: output_schema.md
+  - API:
+      - Overview: api/index.md
+      - CLI: api/cli.md
+      - Config (pkg): api/config.md
+      - Corpus (pkg): api/corpus.md
+      - Analysis (pkg): api/analysis.md
+      - Decodability (pkg): api/decodability.md
+      - Frontier (pkg): api/frontier.md
+      - Reporting (pkg): api/reporting.md
+      - NLP cache (pkg): api/nlp_cache.md
+      - Metrics (pkg): api/metrics.md
+      - Surrogates (pkg): api/surrogates.md
+      - Semiotic (pkg): api/semiotic.md
+
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths:
+            - .
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - fenced_code
+  - tables
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+watch:
+  - ./semiconj
